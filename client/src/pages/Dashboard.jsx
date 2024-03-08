@@ -1,18 +1,10 @@
 import "./Dashboard.scss";
-import { useLayoutEffect } from "react";
-import Button from "../components/Button";
-import NavBar from "../components/NavBar";
+import { useEffect } from "react";
 
 const DashBoard = () => {
-    useLayoutEffect(() => {}, []);
+    useEffect(() => {}, []);
 
-    return (
-        <div className="DashBoard">
-            <NavBar />
-            Test de component
-            <Button text={"Profil complet"} arrow={true} />
-        </div>
-    );
+    return <div className="DashBoard">dashboard</div>;
 };
 
 export default DashBoard;
