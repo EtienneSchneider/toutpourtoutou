@@ -8,15 +8,24 @@ nav {
         gap: 64px;
 
         li {
-            padding-block: 32px;
-
             a {
+                padding-block: 32px;
                 display: flex;
                 align-items: center;
+
                 span {
                     margin-right: 8px;
                     width: 20px;
                 }
+
+                &:hover:not(.active) {
+                    color: var(--black);
+                }
+            }
+
+            .active {
+                color: var(--accent);
+                border-bottom: 3px solid var(--accent);
             }
         }
     }
