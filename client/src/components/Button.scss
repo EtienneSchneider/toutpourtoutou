@@ -8,4 +8,8 @@
     border-radius: 40px;
     background-color: var(--accent);
     color: var(--white);
+
+    &:hover {
+        background-color: hsl(4, 85%, 60%);
+    }
 }
