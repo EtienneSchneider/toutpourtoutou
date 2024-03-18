@@ -1,12 +1,10 @@
 # Api documentation
 
-
-
 ### User routes :
 
 /createAccount
 
-Route permettant de créer un nouvel utilisateur. 
+Route permettant de créer un nouvel utilisateur.
 
 ```
 firstname: { type: String, required },
@@ -16,16 +14,19 @@ email: { type: String, required },
 password: { type: String, required },
 isAdmin: { type: Boolean, default: false },
 ```
-return a success response if everything is good or an error response
+
+Return a success response if everything is good or an error response. Return an error instead
 
 /login
 
-Route permettant de se connecter. 
+Route permettant de se connecter.
 
 ```
 email: { type: String, required },
 password: { type: String, required },
 ```
+
+Return a success response with a token the user connected.
 
 router.post("/login", login);
 router.get("/status", verifyJWT, getStatus)
