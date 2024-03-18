@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 
 const ProductSchema = mongoose.Schema(
     {
-        name: {
+        serialNumber: {
+            type: String,
+            required: [true, "Please enter product serial number"]
+        },
+        brand: {
             type: String,
             required: [true,"Please enter product name"]
         },
@@ -15,13 +19,21 @@ const ProductSchema = mongoose.Schema(
             enum: ["food", "toy", "hygiene"],
             required: true
         },
-        quantity: {
+        dogType: {
             type: String,
-            required: true,
-            default: 0
+            enum: ["dog", "puppy", "any"],
+            default: any,
         },
         image: {
             type: String,
+        },
+        price: {
+            type: String,
+            required: true
         }
     }
 );
+
+const Product = mongoose.model("Product", ProductSchema);
+
+export default Product;

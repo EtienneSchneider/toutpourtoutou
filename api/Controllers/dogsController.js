@@ -16,12 +16,18 @@ export const addDog = async (req, res) => {
 
 export const getUserDogs = async (req, res) => {
     try {
-        const dogs = await Dog.find({ owner: 'etix' });
-        res.status(200).json(dogs);
+      const { owner } = req.body;
+      if (!mongoose.Types.ObjectId.isValid(owner)) {
+        return res.status(400).json({ error: "OwnerId invalid" });
+      }
+      const dogs = await Dog.find({ owner: owner });
+      res.status(200).json(dogs);
     } catch (err) {
-        console.error(err);
+      console.error(err);
+      res.status(500).json({ error: "Error getting dogs" });
     }
-};
+  };
+  
 
 export const sanitizeDogData = async (req, res, next) => {
     const data = req.body;
@@ -38,6 +44,7 @@ export const sanitizeDogData = async (req, res, next) => {
         otherHeathIssues: "object",
         treatments: "object",
         otherTreatments: "object",
+        weight: "object"
     };
 
     const feedRule = {
@@ -64,7 +71,6 @@ export const sanitizeDogData = async (req, res, next) => {
     ) {
         return res.status(401).send("Wrong dogs data");
     }
-
     next();
 };
 
