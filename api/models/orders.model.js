@@ -23,4 +23,5 @@ const OrderSchema = mongoose.Schema(
 
 const Order = mongoose.model("Order", OrderSchema);
 
-export default Product;
+export default Order;
+ 

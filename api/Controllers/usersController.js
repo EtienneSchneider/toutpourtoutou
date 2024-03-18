@@ -4,9 +4,8 @@ import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 
 export const createAccount = async (req, res) => {
-  const user = await User.findOne({
-    $or: [{ username: username }, { email: password }],
-  });
+  const { email } = req.body;
+  const user = await User.findOne({ email: email });
 
   if (user) {
     return res.status(401).send("Identifier or email already used");
@@ -25,9 +24,7 @@ export const createAccount = async (req, res) => {
 export const login = async (req, res) => {
   const { username, password } = req.body;
   try {
-    const user = await User.findOne({
-      $or: [{ username: username }, { email: password }],
-    });
+    const user = await User.findOne({ email: password });
     if (!user) {
       return res.status(401).send("Invalid credentials");
     }
