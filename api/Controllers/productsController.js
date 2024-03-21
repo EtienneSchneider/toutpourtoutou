@@ -1,4 +1,5 @@
-import Product from "../models/products.model.js";
+import Product from "../Models/products.model.js";
+import { stringToAge } from "../Utils/Helpers/functions.js";
 
 export const addProduct = async (req, res) => {
     const product = await Product.findOne({
@@ -23,3 +24,25 @@ export const getAllProducts = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
+
+export const getRecommendations = async (req, res) => {
+    try {
+        const allProducts = await Product.find(); 
+        const dogTypes = ["any"];
+
+        for (const dog of req.body.dogs) {
+            const dogAge = stringToAge(dog.identification.birthDate);
+            if (dogAge >= 12 && !dogTypes.includes("dog")) {
+                dogTypes.push("dog");
+            } else if (dogAge < 12 && !dogTypes.includes("puppy")) {
+                dogTypes.push("puppy");
+            }
+        }
+        const recommendations = allProducts.filter(product => dogTypes.includes(product.dogType));
+        
+        res.status(200).json(recommendations);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+

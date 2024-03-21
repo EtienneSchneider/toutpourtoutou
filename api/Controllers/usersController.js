@@ -1,5 +1,5 @@
-import User from "../models/users.model.js";
-import { generateToken } from "../utils/helpers/functions.js";
+import User from "../Models/users.model.js";
+import { generateToken } from "../Utils/Helpers/functions.js";
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 
@@ -14,17 +14,20 @@ export const createAccount = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     req.body.password = hashedPassword;
-    const newUser = await User.create(req.body);
-    res.status(200).json(newUser);
+    await User.create(req.body);
+    res.status(200).json({
+      success: true,
+      message: "Utilisateur créé avec succès"
+    });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
 };
 
 export const login = async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email: password });
+    const user = await User.findOne({ email: email });
     if (!user) {
       return res.status(401).send("Invalid credentials");
     }
@@ -33,8 +36,16 @@ export const login = async (req, res) => {
       return res.status(401).send("Invalid credentials");
     }
 
+    const protectedUser = {
+      "firstname": req.body.firstname,
+      "lastname": req.body.firstname,
+      "owner": req.body.firstname,
+      "email": req.body.firstname,
+      "isAdmin": req.body.isAdmin
+    }
+
     const token = generateToken(user);
-    res.send({ token, user });
+    res.send({ token, protectedUser });
   } catch (err) {
     console.error(err);
     res.status(500).send("Error logging in");

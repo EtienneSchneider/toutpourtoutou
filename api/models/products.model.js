@@ -21,11 +21,12 @@ const ProductSchema = mongoose.Schema(
         },
         dogType: {
             type: String,
-            enum: ["dog", "puppy", "any"],
-            default: any,
+            enum: ["dog", "puppy", "sterilized","any"],
+            default: "any",
         },
         image: {
             type: String,
+            required: true
         },
         price: {
             type: String,

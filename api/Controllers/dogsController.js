@@ -1,5 +1,5 @@
-import Dog from "../models/dogs.model.js";
-import { sanitizeObject } from "../utils/helpers/functions.js";
+import Dog from "../Models/dogs.model.js";
+import { sanitizeObject } from "../Utils/Helpers/functions.js";
 
 export const addDog = async (req, res) => {
     const dog = await Dog.findOne({ chipNumber: req.body.chipNumber });
@@ -36,6 +36,7 @@ export const sanitizeDogData = async (req, res, next) => {
         name: "string",
         gender: "boolean",
         birthDate: "string",
+        breed: "string"
     };
 
     const healthRule = {
@@ -44,7 +45,7 @@ export const sanitizeDogData = async (req, res, next) => {
         otherHeathIssues: "object",
         treatments: "object",
         otherTreatments: "object",
-        weight: "object"
+        // weight: "object"
     };
 
     const feedRule = {
@@ -67,7 +68,9 @@ export const sanitizeDogData = async (req, res, next) => {
         !sanitizeObject(data.health, healthRule) || 
         !sanitizeObject(data.feed, feedRule) || 
         !sanitizeObject(data.activity ,activityRule) || 
-        !sanitizeObject(data.education ,educationRule)
+        !sanitizeObject(data.education ,educationRule) || 
+        typeof data.chipNumber !== "string" || 
+        data.owner === undefined
     ) {
         return res.status(401).send("Wrong dogs data");
     }
