@@ -1,8 +1,8 @@
 import "./DogDropdown.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const DogDropdown = ({ dogMap, selectedDog }) => {
+const DogDropdown = ({ dogList, selectedDog }) => {
     const [open, setOpen] = useState(false);
 
     const handleDropdownClick = () => {
@@ -15,17 +15,22 @@ const DogDropdown = ({ dogMap, selectedDog }) => {
                 onClick={handleDropdownClick}
                 className="dog-dropdown-toggle subheadertext"
             >
-                {dogMap.get(selectedDog).name}
+                {
+                    dogList.find((dog) => dog._id === selectedDog)
+                        .identification.name
+                }
                 <span className="material-symbols-outlined">
                     {open ? "arrow_drop_up" : "arrow_drop_down"}
                 </span>
             </button>
             {open ? (
                 <ul className="dog-dropdown-menu bg-white col-gray">
-                    {Array.from(dogMap.keys()).map((key) =>
-                        key !== selectedDog ? (
-                            <li className="dog-dropdown-item" key={key}>
-                                <Link>{dogMap.get(key).name}</Link>
+                    {dogList.map((dog) =>
+                        dog._id !== selectedDog ? (
+                            <li className="dog-dropdown-item" key={dog._id}>
+                                <Link to={"/" + dog._id}>
+                                    {dog.identification.name}
+                                </Link>
                             </li>
                         ) : (
                             <></>

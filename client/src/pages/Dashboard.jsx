@@ -1,31 +1,45 @@
 import "./Dashboard.scss";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import Button from "../components/Button";
 import ProductPreview from "../components/ProductPreview";
 import DogDropdown from "../components/DogDropdown";
 
 const DashBoard = () => {
+    const [dogList, setDogList] = useState(null);
+    const [selectedDogId, setSelectedDog] = useState(null);
     const [products, setProducts] = useState([1, 2, 3, 4, 5]);
-    const [dogMap, setDogMap] = useState(null);
     const [dogsCaracs, setDogCaracs] = useState([
         "2 mois",
         "Cane Corso",
         "Femelle",
         "Bonne santé",
     ]);
+    const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        // on simule le call api ici
-        const map1 = new Map();
-
-        map1.set("0", { name: "Jinger" });
-        map1.set("1", { name: "Rookie" });
-        map1.set("2", { name: "Fabio" });
-
-        setDogMap(map1);
+        axios({
+            method: "post",
+            maxBodyLength: Infinity,
+            url: "http://127.0.0.1:3001/toutpourtoutou-api/userDogs",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: JSON.stringify({
+                owner: "65f85f2a2774f9456d55f288",
+            }),
+        })
+            .then((response) => {
+                setDogList(response.data);
+                setSelectedDog(response.data[0]._id);
+                setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }, []);
 
-    return (
+    return { isLoaded } ? (
         <div className="DashBoard">
             <div className="dog-card">
                 <div className="img-container">
@@ -34,10 +48,10 @@ const DashBoard = () => {
                         alt=""
                     />
                 </div>
-                {dogMap ? (
+                {dogList ? (
                     <DogDropdown
-                        dogMap={dogMap}
-                        selectedDog={"0"}
+                        dogList={dogList}
+                        selectedDog={selectedDogId}
                     ></DogDropdown>
                 ) : (
                     <></>
@@ -86,6 +100,8 @@ const DashBoard = () => {
                 <h2 className="subheadertext">Fil d'actualité</h2>
             </div>
         </div>
+    ) : (
+        <></>
     );
 };
 

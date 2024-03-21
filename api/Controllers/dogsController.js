@@ -1,5 +1,6 @@
 import Dog from "../Models/dogs.model.js";
 import { sanitizeObject } from "../Utils/Helpers/functions.js";
+import mongoose from "mongoose";
 
 export const addDog = async (req, res) => {
     const dog = await Dog.findOne({ chipNumber: req.body.chipNumber });
