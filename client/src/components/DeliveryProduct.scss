@@ -1,6 +1,6 @@
 .DeliveryProduct {
-    min-height: 382px; /* Hauteur minimale de la carte */
-    width: 282px; /* Largeur de la carte */
+    height: 470px; /* Hauteur minimale de la carte */
+    width: 280px; /* Largeur de la carte */
     display: flex;
     flex-direction: column; /* Le texte en dessous de l'image */
     justify-content: flex-start;
@@ -8,6 +8,8 @@
     gap: 16px;
     padding: 16px;
     border-radius: 16px;
+    margin-left: 0.5rem;
+    margin-bottom: 2rem;
 
     .img-container {
         background-color: var(--white);
@@ -25,8 +27,11 @@
 }
 
 
-.buttonPlusD {
-    margin: 50%;
+.buttonPlusProduct {
+    margin-left: 2.5rem;
+    margin-top: -0.5rem;
+    backdrop-filter: blur(1px); 
+
 }
 
 

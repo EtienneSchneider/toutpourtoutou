@@ -4,17 +4,20 @@ import "./ButtonPlus.scss";
 
 import ButtonPlus from './ButtonPlus'
 
-const DeliveryProduct = ({ title, desc, link, img_url }) => {
+const DeliveryProduct = ({ title, desc, link, img_url, price}) => {
     return (
         <Link to={link} className="DeliveryProduct bg-default">
         <div className="img-container">
             <img className="img" src={img_url} alt="" />
-            <ButtonPlus className="buttonPlusD"/>
+            <div className="buttonPlusProduct">
+            <ButtonPlus/>
+            </div>
             
         </div>
         
         <div className="text-container">
             <span className="col-black">{title}</span>
+            <p className="col-black">{price}€</p>
             <p className="col-gray">{desc}</p>
 
             
