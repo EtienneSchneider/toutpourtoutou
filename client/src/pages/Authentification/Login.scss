@@ -1,0 +1,64 @@
+.registration {
+    background-color: var(--primary-background);
+    height: 100vh;
+    padding-top: 100px;
+
+    .container {
+        padding: 4rem 4rem 5rem 4rem;
+        margin: auto;
+        width: fit-content;
+        background-color: white;
+        border-radius: 25px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        h3 {
+            text-align: center;
+        }
+
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            gap: 12px;
+            margin-top: 32px;
+
+            input {
+                width: 250px;
+                height: 40px;
+                border: none;
+                border-bottom: 2px solid #ccc;
+                outline: none;
+                transition: border-bottom-color 0.2s ease-in-out;
+
+                margin: auto;
+
+                &:focus {
+                    border-bottom-color: grey;
+                }
+            }
+
+            .cta {
+                display: flex;
+                margin: 24px auto 0 auto;
+                gap: 5px;
+                button {
+                    background-color: transparent;
+                    border: none;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .error {
+        color: rgb(251, 61, 61);
+        text-decoration: underline;
+    }
+
+    .bottomPart {
+        margin: auto;
+        width: fit-content;
+    }
+}

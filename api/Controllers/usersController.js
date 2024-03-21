@@ -15,7 +15,7 @@ export const createAccount = async (req, res) => {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = hashedPassword;
         const newUser = await User.create(req.body);
-        res.status(200).json(newUser);
+        res.status(200).json();
     } catch (error) {
         res.status(500).send({ message: error.message });
     }
@@ -33,7 +33,15 @@ export const login = async (req, res) => {
             return res.status(401).send("Invalid credentials");
         }
 
-        const token = generateToken(user);
+        const secureUser = {
+            _id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            owner: user.owner
+        }
+
+        const token = generateToken(secureUser);
         res.send({ token, user });
     } catch (err) {
         console.error(err);
@@ -54,7 +62,16 @@ export const verifyJWT = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.user = await User.findById(decoded._id); // Attach user object to request if valid
+        const user = await User.findById(decoded._id);
+
+        const secureUser = {
+            _id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            owner: user.owner
+        }
+        req.user = secureUser;
         next();
     } catch (err) {
         console.error(err);

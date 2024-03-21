@@ -44,7 +44,7 @@ Return a success response with the user connected.
 
 ## Dogs routes :
 
-#### /addDogs POST
+#### /addDog POST
 
 Dog adding route.
 

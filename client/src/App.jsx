@@ -7,11 +7,13 @@ import Products from "./pages/Products";
 import ComponentTest from "./pages/ComponentsTest";
 import NavBar from "./components/NavBar";
 import SingleProductPage from "./pages/SingleProductPage";
+import LoginPage from "./pages/Authentification/LoginPage";
+import { AppContextProvider } from "./contexts/AppContext.jsx";
 
 function App() {
     return (
-        <>
-            <NavBar />
+        <AppContextProvider>
+            {/* <NavBar /> */}
             <div className="main-container">
                 <Routes>
                     <Route path="/dashboard" exact element={<DashBoardRoot />}>
@@ -23,10 +25,11 @@ function App() {
                     <Route path="/products" exact element={<Products />} />
                     <Route path="/new-dog" exact element={<NewDogPage />} />
                     <Route path="/comptest" exact element={<ComponentTest />} />
+                    <Route path="/login" exact element={<LoginPage />} />
                     <Route path="*" element={<p>not found</p>} />
                 </Routes>
             </div>
-        </>
+        </AppContextProvider>
     );
 }
 
