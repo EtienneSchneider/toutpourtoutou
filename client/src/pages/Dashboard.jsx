@@ -1,13 +1,13 @@
 import "./Dashboard.scss";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import Button from "../components/Button";
-import ProductPreview from "../components/ProductPreview";
-import DogDropdown from "../components/DogDropdown";
+import { useOutletContext, useParams } from "react-router-dom";
+import Button from "../components/clickables/Button";
+import ProductPreview from "../components/dashboard_components/ProductPreview";
+import DogDropdown from "../components/dashboard_components/DogDropdown";
 
 const DashBoard = () => {
-    const [dogList, setDogList] = useState(null);
-    const [selectedDogId, setSelectedDog] = useState(null);
+    const { dogList } = useOutletContext();
+    const selectedDogId = useParams().dogId;
     const [products, setProducts] = useState([1, 2, 3, 4, 5]);
     const [dogsCaracs, setDogCaracs] = useState([
         "2 mois",
@@ -18,25 +18,10 @@ const DashBoard = () => {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        axios({
-            method: "post",
-            maxBodyLength: Infinity,
-            url: "http://127.0.0.1:3001/toutpourtoutou-api/userDogs",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            data: JSON.stringify({
-                owner: "65f85f2a2774f9456d55f288",
-            }),
-        })
-            .then((response) => {
-                setDogList(response.data);
-                setSelectedDog(response.data[0]._id);
-                setLoaded(true);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        // console.log(dogList);
+        if (dogList) {
+            setLoaded(true);
+        }
     }, []);
 
     return { isLoaded } ? (
@@ -57,13 +42,13 @@ const DashBoard = () => {
                     <></>
                 )}
                 <ul className="carac-list col-gray">
-                    {dogsCaracs.map((dog) => {
-                        return <li>{dog}</li>;
+                    {dogsCaracs.map((carac) => {
+                        return <li>{carac}</li>;
                     })}
                 </ul>
                 <Button
                     text={"Profil complet"}
-                    link={"/articles"}
+                    link={"/dog-profile/" + selectedDogId}
                     arrow={true}
                 />
             </div>

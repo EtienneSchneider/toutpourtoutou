@@ -28,7 +28,7 @@ const DogDropdown = ({ dogList, selectedDog }) => {
                     {dogList.map((dog) =>
                         dog._id !== selectedDog ? (
                             <li className="dog-dropdown-item" key={dog._id}>
-                                <Link to={"/" + dog._id}>
+                                <Link to={"/dashboard/" + dog._id}>
                                     {dog.identification.name}
                                 </Link>
                             </li>

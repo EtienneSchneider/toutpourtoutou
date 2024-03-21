@@ -109,6 +109,7 @@ input[type="radio"] {
 }
 
 label.radio-lab {
+    width: fit-content;
     display: inline-block;
     padding: 1em 2em;
     background-color: var(--primary-background);

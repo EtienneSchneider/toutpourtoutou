@@ -1,13 +1,19 @@
 import "./NavBar.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const NavBar = () => {
+    const location = useLocation();
+
     return (
         <nav className="bg-white">
             <ul className="col-gray">
                 <li>
                     <NavLink
-                        to={"/"}
+                        reloadDocument
+                        to={"/dashboard"}
+                        isActive={() =>
+                            location.pathname.includes("/dashboard")
+                        }
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         <span className="material-symbols-outlined">

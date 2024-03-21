@@ -1,0 +1,35 @@
+.NewDogPage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 8rem;
+    gap: 32px;
+    color: var(--gray);
+
+    section:first-of-type {
+        max-width: 500px;
+        h2 {
+            display: none;
+        }
+    }
+
+    .radio-container {
+        display: flex;
+        gap: 8px;
+    }
+
+    .back-link {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        position: absolute;
+        top: 4rem;
+        left: 8rem;
+    }
+
+    .error {
+        color: red;
+    }
+}
