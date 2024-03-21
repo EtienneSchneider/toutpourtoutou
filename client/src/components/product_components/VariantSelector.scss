@@ -1,0 +1,89 @@
+// form {
+//     margin-top: 2rem;
+// }
+
+.picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    margin-block-end: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    width: 50%;
+    float: right;
+}
+
+.picker legend {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding-inline: 0.5rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.picker label {
+    position: relative;
+    inline-size: 3rem;
+    block-size: 3rem;
+    isolation: isolate;
+    display: grid;
+    place-items: center;
+}
+
+.picker label > span {
+    position: absolute;
+    inset: 0;
+    block-size: 100%;
+    inline-size: 100%;
+}
+
+label[for*="size"] > span {
+    font-size: 1rem;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 100%;
+    border: 1px black solid;
+}
+
+label[for*="size"] > input:checked ~ span {
+    background-color: #495867;
+    color: #fff;
+}
+
+/* Color pickers */
+
+label[for*="color"] {
+    inline-size: 2rem;
+    block-size: 2rem;
+}
+
+label[for*="color"] > span {
+    font-size: 1px;
+    display: grid;
+    place-items: center;
+    background-color: var(--color, #fff);
+    border-radius: 100%;
+    color: transparent;
+}
+
+label[for*="color"] > input:checked ~ span {
+    box-shadow: 0 0 0 6px var(--color);
+}
+
+label[for="color-multicolor"] > span {
+    background: linear-gradient(
+        to right,
+        red 25%,
+        green 25% 50%,
+        blue 50% 75%,
+        yellow 75%
+    );
+}
+
+label[for*="color-multicolor"] > input:checked ~ span {
+    box-shadow: 0 0 0 6px #000;
+}

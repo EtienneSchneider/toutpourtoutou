@@ -2,6 +2,8 @@ nav {
     display: flex;
     justify-content: flex-end;
     padding-inline: 64px;
+    position: sticky;
+    top: 0;
 
     ul {
         display: flex;
