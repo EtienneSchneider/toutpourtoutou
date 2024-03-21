@@ -89,7 +89,7 @@ Route that return all dogs for a user.
 
 ```
 {
-  chipNumber: string, required
+  owner: string, required
 }
 ```
 
