@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import userRoutes from "./utils/routes/userRoutes.js";
-import dogRoutes from "./utils/routes/dogRoutes.js";
-import productRoutes from "./utils/routes/dogRoutes.js";
+import userRoutes from "./Routes/userRoutes.js"
+import dogRoutes from "./Routes/dogRoutes.js";
+import productRoutes from "./Routes/productRoutes.js";
+import orderRoutes from "./Routes/orderRoutes.js";
 import "dotenv/config";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/toutpourtoutou-api", userRoutes);
 app.use("/toutpourtoutou-api", dogRoutes);
 app.use("/toutpourtoutou-api", productRoutes);
+app.use("/toutpourtoutou-api", orderRoutes);
 
 mongoose
     .connect(process.env.MONGO_CONNECTION_STRING)
