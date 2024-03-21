@@ -9,11 +9,11 @@ const SizeButtons = () => {
   };
 
   return (
-    <form className='formButton'>
+    <form>
       <fieldset className="picker">
         <legend>Tailles</legend>
         {['S', 'M', 'L'].map((size) => (
-          <label className='label' key={size} htmlFor={`size-${size}`}>
+          <label key={size} htmlFor={`size-${size}`}>
             <input
               type="radio"
               name="sizes"
@@ -28,7 +28,7 @@ const SizeButtons = () => {
       <fieldset className="picker">
         <legend>Couleurs</legend>
         {['multicolor', 'violet', 'green', 'pink'].map((color) => (
-          <label className='label' key={color} htmlFor={`color-${color.toLowerCase()}`} style={{ '--color': color}}>
+          <label key={color} htmlFor={`color-${color.toLowerCase()}`} style={{ '--color': color}}>
             <input
               type="radio"
               name="colors"

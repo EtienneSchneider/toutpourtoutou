@@ -1,9 +1,8 @@
 /* Global styles */
 
 
-.formButton{
+form{
 	margin-top: 2rem;
-	margin-left: -50rem;
 	
 }
 .picker {
@@ -46,7 +45,7 @@
 
 
 
-.label[for*="size"] > span {
+label[for*="size"] > span {
 	font-size: 1rem;
 	line-height: 1;
 	display: grid;
@@ -57,37 +56,37 @@
     border: 1px black solid;
 }
 
-.label[for*="size"] > input:checked ~ span {
+label[for*="size"] > input:checked ~ span {
 	background-color: #495867;
 	color: #fff;
 }
 
 /* Color pickers */
 
-.label[for*="color"] {
+label[for*="color"] {
 	inline-size: 2rem;
 	block-size: 2rem;
 }
 
-.label[for*="color"] > span {
+label[for*="color"] > span {
 	font-size: 1px;
 	display: grid;
 	place-items: center;
-	background-color: white;
+	background-color: var(--color, #fff);
 	border-radius: 100%;
 	color: transparent;
 }
 
 
-.label[for*="color"] > input:checked ~ span {
+label[for*="color"] > input:checked ~ span {
 	box-shadow: 0 0 0 6px var(--color);
 }
 
-.label[for="color-multicolor"] > span {
+label[for="color-multicolor"] > span {
 	background: linear-gradient(to right, red 25%, green 25% 50%, blue 50% 75%, yellow 75%);
 }
 
-.label[for*="color-multicolor"] > input:checked ~ span {
+label[for*="color-multicolor"] > input:checked ~ span {
 	box-shadow: 0 0 0 6px #000;
 }
 

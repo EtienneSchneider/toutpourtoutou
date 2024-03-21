@@ -1,16 +1,90 @@
 import "./Dashboard.scss";
-import { useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/Button";
-import NavBar from "../components/NavBar";
+import ProductPreview from "../components/ProductPreview";
+import DogDropdown from "../components/DogDropdown";
 
 const DashBoard = () => {
-    useLayoutEffect(() => {}, []);
+    const [products, setProducts] = useState([1, 2, 3, 4, 5]);
+    const [dogMap, setDogMap] = useState(null);
+    const [dogsCaracs, setDogCaracs] = useState([
+        "2 mois",
+        "Cane Corso",
+        "Femelle",
+        "Bonne santé",
+    ]);
+
+    useEffect(() => {
+        // on simule le call api ici
+        const map1 = new Map();
+
+        map1.set("0", { name: "Jinger" });
+        map1.set("1", { name: "Rookie" });
+        map1.set("2", { name: "Fabio" });
+
+        setDogMap(map1);
+    }, []);
 
     return (
         <div className="DashBoard">
-            <NavBar />
-            Test de component
-            <Button text={"Profil complet"} arrow={true} />
+            <div className="dog-card">
+                <div className="img-container">
+                    <img
+                        src="https://i.pinimg.com/originals/ba/fa/eb/bafaebfeeca3e63ac21e9efd3c9406eb.jpg"
+                        alt=""
+                    />
+                </div>
+                {dogMap ? (
+                    <DogDropdown
+                        dogMap={dogMap}
+                        selectedDog={"0"}
+                    ></DogDropdown>
+                ) : (
+                    <></>
+                )}
+                <ul className="carac-list col-gray">
+                    {dogsCaracs.map((dog) => {
+                        return <li>{dog}</li>;
+                    })}
+                </ul>
+                <Button
+                    text={"Profil complet"}
+                    link={"/articles"}
+                    arrow={true}
+                />
+            </div>
+            <div className="recap">
+                <h2 className="subheadertext">Récapitulatif</h2>
+            </div>
+            <div className="delivery">
+                <div className="delivery-desc">
+                    <h2 className="subheadertext">Votre prochaine commande</h2>
+                    <p className="col-gray">
+                        Statut : envoyé <br /> Livraison prévue : 16 avril 2024
+                    </p>
+                </div>
+                <div className="delivery-list">
+                    {products.map(() => {
+                        return (
+                            <ProductPreview
+                                title={"Friskies® Light"}
+                                desc="Croquettes allégées au poulet pour chien en surpoids"
+                                img_url={
+                                    "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
+                                }
+                            />
+                        );
+                    })}
+                </div>
+            </div>
+            <div className="articles">
+                <h2 className="subheadertext">
+                    Articles susceptibles de vous intéresser
+                </h2>
+            </div>
+            <div className="inter">
+                <h2 className="subheadertext">Fil d'actualité</h2>
+            </div>
         </div>
     );
 };

@@ -1,0 +1,34 @@
+.fiche {
+    background-color: white;
+    height: 48rem;
+    width: 111rem;
+    margin: 2rem;
+    margin-left: 4.5rem;
+    border-radius: 1.5rem;
+}
+
+.product_infos {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .count-wrapper, .subheadertext, .header, .prix, .description, #description {
+    margin-left: 55rem;
+}
+
+#description {
+    max-width: 30ch;
+    float: right;
+}
+
+
+#description {
+    max-width: 76ch;
+    float: right;
+    text-align: justify;
+    margin-top: 1rem;
+}
+
+#nom {
+    margin-top: 1rem;
+}

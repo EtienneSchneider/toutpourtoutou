@@ -27,9 +27,9 @@ const Counter = () => {
 
   return (
     <div className='count-wrapper'>
-      <button className='buttonPlus' onClick={decrease}>-</button>
+      <button onClick={decrease}>-</button>
       <span className='count' contentEditable='false' onBlur={onCountEdit}>{count}</span>
-      <button className="buttonPlus" onClick={increase}>+</button>
+      <button onClick={increase}>+</button>
     </div>
   );
 };

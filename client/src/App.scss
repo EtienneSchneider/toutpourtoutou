@@ -78,6 +78,49 @@ body {
     color: var(--primary-default);
 }
 
+input:not([type="radio"]),
+select,
+textarea {
+    background-color: var(--primary-background);
+    color: var(--black);
+    font-size: var(--fs-formfield);
+    font-weight: var(--fw-light);
+    padding: 0.5em 1em;
+    border-radius: 16px;
+
+    min-width: 200px;
+    max-width: 600px;
+}
+
+select {
+    border-right: 1em solid transparent;
+}
+
+input[type="date"] {
+    &::-webkit-calendar-picker-indicator {
+        opacity: 0.4;
+    }
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+label.radio-lab {
+    display: inline-block;
+    padding: 1em 2em;
+    background-color: var(--primary-background);
+    border: 1px solid transparent;
+    border-radius: 40px;
+
+    &:has(input[type="radio"]:checked) {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+}
+
 @media screen and (max-width: 800px) {
     html {
         font-size: 16px;
