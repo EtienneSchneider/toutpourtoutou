@@ -1,5 +1,7 @@
 import Order from "../Models/orders.model.js";
 import Product from "../Models/products.model.js";
+import mongoose from "mongoose";
+
 
 export const createOrder = async (req, res) => {
     const order = await Order.findOne({
