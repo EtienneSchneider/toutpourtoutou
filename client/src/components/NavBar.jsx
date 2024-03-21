@@ -7,6 +7,7 @@ const NavBar = () => {
             <ul className="col-gray">
                 <li>
                     <NavLink
+                        to={"/"}
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         <span className="material-symbols-outlined">
@@ -17,6 +18,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <NavLink
+                        to={"/products"}
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         <span className="material-symbols-outlined">
@@ -27,6 +29,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <NavLink
+                        to={"/articles"}
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         <span className="material-symbols-outlined">
@@ -37,6 +40,7 @@ const NavBar = () => {
                 </li>
                 <li>
                     <NavLink
+                        to={"/forum"}
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         <span className="material-symbols-outlined">Forum</span>

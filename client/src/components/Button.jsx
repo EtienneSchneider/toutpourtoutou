@@ -1,15 +1,16 @@
+import { Link } from "react-router-dom";
 import "./Button.scss";
 
-const Button = ({ text, arrow }) => {
+const Button = ({ text, link, arrow }) => {
     return (
-        <div className="Button bg-accent col-white">
+        <Link to={link} className="Button">
             {text}
             {arrow ? (
                 <span className="material-symbols-outlined">arrow_forward</span>
             ) : (
                 <></>
             )}
-        </div>
+        </Link>
     );
 };
 
