@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import DogFormSection from "../components/dog_components/DogFormSection";
 import ProductCounter from "../components/product_components/ProductCounter";
 import Button from "../components/clickables/Button";
+import BooleanButton from "../components/BooleanButton/BooleanButton";
 import axios from "axios";
 
 const NewDogPage = () => {
@@ -18,9 +19,9 @@ const NewDogPage = () => {
         dogName: "",
         // dogPicture="",
         birthDate: "",
-        gender: "",
+        gender: false, //false = male; true = femelle;
         breed: "",
-        sterilized: "",
+        sterilized: false,
         healthIssues: "",
         otherHealthIssues: "",
         treatments: "",
@@ -150,10 +151,8 @@ const NewDogPage = () => {
                         <input
                             id="male"
                             type="radio"
-                            // {...register("gender", { required: true })}
                             name="gender"
-                            value="male"
-                            // checked={formData.gender === "male"}
+                            value={false}
                             onChange={handleChange}
                         />
                         Male
@@ -162,10 +161,8 @@ const NewDogPage = () => {
                         <input
                             id="femelle"
                             type="radio"
-                            // {...register("gender", { required: true })}
                             name="gender"
-                            value="female"
-                            // checked={formData.gender === "female"}
+                            value={true}
                             onChange={handleChange}
                         />
                         Femelle
@@ -175,7 +172,6 @@ const NewDogPage = () => {
                 <label htmlFor="date">Date de naissance :</label>
                 <input
                     type="date"
-                    // {...register("birthDate", { required: true })}
                     name="birthDate"
                     value={formData.birthDate}
                     onChange={handleChange}
@@ -209,10 +205,8 @@ const NewDogPage = () => {
                         <input
                             id="nonster"
                             type="radio"
-                            // {...register("sterilized", { required: true })}
                             name="sterilized"
-                            value="nonSteri"
-                            // checked={formData.gender === "male"}
+                            value={false}
                             onChange={handleChange}
                         />
                         Non-stérilisé
@@ -221,10 +215,8 @@ const NewDogPage = () => {
                         <input
                             id="ster"
                             type="radio"
-                            // {...register("sterilized", { required: true })}
                             name="sterilized"
-                            value="steri"
-                            // checked={formData.gender === "female"}
+                            value={true}
                             onChange={handleChange}
                         />
                         Stérilisé
@@ -313,10 +305,8 @@ const NewDogPage = () => {
                             <input
                                 id="educ"
                                 type="radio"
-                                // {...register("training", { required: true })}
                                 name="training"
-                                value="yes"
-                                // checked={formData.gender === "male"}
+                                value={true}
                                 onChange={handleChange}
                             />
                             Oui
@@ -325,10 +315,8 @@ const NewDogPage = () => {
                             <input
                                 id="nonEduc"
                                 type="radio"
-                                // {...register("training", { required: true })}
                                 name="training"
-                                value="no"
-                                // checked={formData.gender === "female"}
+                                value={false}
                                 onChange={handleChange}
                             />
                             Non
@@ -342,10 +330,8 @@ const NewDogPage = () => {
                             <input
                                 id="educDog"
                                 type="radio"
-                                // {...register("trainingDog", { required: true })}
                                 name="trainingDog"
-                                value="yes"
-                                // checked={formData.gender === "male"}
+                                value={true}
                                 onChange={handleChange}
                             />
                             Oui
@@ -354,16 +340,16 @@ const NewDogPage = () => {
                             <input
                                 id="NonEducDog"
                                 type="radio"
-                                {...register("trainingDog", { required: true })}
                                 name="trainingDog"
-                                value="no"
-                                // checked={formData.gender === "female"}
+                                value={false}
                                 onChange={handleChange}
                             />
                             Non
                         </label>
                     </div>
                 </label>
+                {/* Ou utilisation du BooleanButton */}
+                {/* <BooleanButton /> */}
 
 
             </DogFormSection>
