@@ -53,7 +53,7 @@ const NewDogPage = () => {
 
     return (
         <div className="NewDogPage">
-            <Link to={"/"} className="back-link">
+            <Link to={"/dashboard"} className="back-link">
                 <span className="material-symbols-outlined">arrow_back</span>
                 Retour
             </Link>

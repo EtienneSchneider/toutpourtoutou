@@ -6,6 +6,7 @@ import NewDogPage from "./pages/NewDogPage";
 import Products from "./pages/Products";
 import ComponentTest from "./pages/ComponentsTest";
 import NavBar from "./components/NavBar";
+import SingleProductPage from "./pages/SingleProductPage";
 
 function App() {
     return (

@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import "./SingleProductPage.scss";
-import SizeButtons from "./SizeButtons";
-import Counter from "./ButtonPlus";
+import VariantSelector from "../components/product_components/VariantSelector";
+import ProductCounter from "../components/product_components/ProductCounter";
 
 const SingleProductPage = ({ title, desc, img_url, price }) => {
     return (
-        <div className="DashBoard">
+        <div className="SingleProductPage">
             <div className="fiche">
                 <div className="product_img">
                     <img src={img_url} />
@@ -17,16 +17,16 @@ const SingleProductPage = ({ title, desc, img_url, price }) => {
                     </h1>
                     <p className="subheadertext">{price}€</p>
 
-                    <SizeButtons />
+                    {/* <VariantSelector />
                     <h2 className="subheadertext">Recommandé pour</h2>
 
                     <h2 className="header">components pp</h2>
 
                     <h2 className="subheadertext">
                         Quantité prévue dans la prochaine commande
-                    </h2>
+                    </h2> */}
 
-                    <Counter />
+                    <ProductCounter />
 
                     <p className="body" id="description">
                         {" "}
