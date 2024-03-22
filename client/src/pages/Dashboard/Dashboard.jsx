@@ -22,7 +22,6 @@ const DashBoard = () => {
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        // console.log(dogList);
         if (dogList) {
             setSelectedDogData(
                 dogList.find((dog) => dog._id === selectedDogId),

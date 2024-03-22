@@ -13,9 +13,9 @@ export const AppApi = () => {
             baseURl: "http://127.0.0.1:3001/toutpourtoutou-api",
             method: method,
             url: endpoint || '',
-            Headers: {
+            headers: {
                 Accept: 'application/json',
-                Authorization: `Brearer ${localStorage.getItem('accessToken')}`
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`
             },
             params: params,
             data: data,

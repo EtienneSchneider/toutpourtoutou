@@ -1,5 +1,5 @@
 import express from "express";
-import { addDog, getUserDogs,sanitizeDogData } from "../Controllers/dogsController.js";
+import { addDog, getUserDogs, sanitizeDogData } from "../Controllers/dogsController.js";
 
 const router = express.Router();
 

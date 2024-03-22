@@ -8,38 +8,53 @@ import ComponentTest from "./pages/ComponentsTest";
 import NavBar from "./components/NavBar";
 import SingleProductPage from "./pages/SingleProductPage";
 import LoginPage from "./pages/Authentification/LoginPage";
-import { AppContextProvider } from "./contexts/AppContext.jsx";
+import { AppContextProvider, useAppContext } from "./contexts/AppContext.jsx";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Content() {
+    const { appApi, isAuthentificated, setIsAuthentificated } = useAppContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+            appApi
+                .getAuthStatus()
+                .then((response) => {
+                })
+                .catch((error) => {
+                    setIsAuthentificated(false);
+                    localStorage.removeItem("accessToken")
+                    navigate("/login");
+                });
+        } else {
+            navigate("/login");
+        }
+    }, [isAuthentificated]);
+
+    return (
+        <div className="main-container">
+            <Routes>
+                <Route path="/dashboard" exact element={<DashBoardRoot />}>
+                    <Route path="/dashboard/:dogId" element={<DashBoard />} />
+                </Route>
+                <Route path="/products" exact element={<Products />} />
+                <Route path="/new-dog" exact element={<NewDogPage />} />
+                <Route path="/comptest" exact element={<ComponentTest />} />
+                <Route path="/login" exact element={<LoginPage />} />
+                <Route path="*" element={<p>not found</p>} />
+            </Routes>
+        </div>
+    );
+}
 
 function App() {
     return (
-        <AppContextProvider>
-            <Router>
-                <NavBar />
-                <div className="main-container">
-                    <Routes>
-                        <Route
-                            path="/dashboard"
-                            exact
-                            element={<DashBoardRoot />}
-                        >
-                            <Route
-                                path="/dashboard/:dogId"
-                                element={<DashBoard />}
-                            />
-                        </Route>
-                        <Route path="/products" exact element={<Products />} />
-                        <Route path="/new-dog" exact element={<NewDogPage />} />
-                        <Route
-                            path="/comptest"
-                            exact
-                            element={<ComponentTest />}
-                        />
-                        <Route path="/login" exact element={<LoginPage />} />
-                        <Route path="*" element={<p>not found</p>} />
-                    </Routes>
-                </div>
-            </Router>
-        </AppContextProvider>
+        <Router>
+            <AppContextProvider>
+                <Content />
+            </AppContextProvider>
+        </Router>
     );
 }
 

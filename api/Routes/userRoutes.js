@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post("/createAccount", createAccount);
 router.post("/login", login);
-router.get("/status", verifyJWT, getStatus)
+router.get("/status", getStatus)
 
 
 export default router;

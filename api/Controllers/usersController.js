@@ -38,20 +38,40 @@ export const login = async (req, res) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            owner: user.owner
-        }
+            owner: user.owner,
+        };
 
         const token = generateToken(secureUser);
         res.send({ token, user });
     } catch (err) {
-        console.error(err);
         res.status(500).send("Error logging in");
     }
 };
 
 export const getStatus = async (req, res) => {
-    const user = req.user;
-    res.status(200).json(user);
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).send("Unauthorized: Missing JWT token");
+    }
+    const token = authHeader.split(" ")[1];
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+        const user = await User.findById(decoded._id);
+
+        const secureUser = {
+            _id: user._id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            owner: user.owner,
+        };
+        res.status(200).json(secureUser);
+    } catch (err) {
+        console.error(err);
+        return res.status(401).send(err);
+    }
+
 };
 
 export const verifyJWT = async (req, res, next) => {
@@ -69,8 +89,8 @@ export const verifyJWT = async (req, res, next) => {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
-            owner: user.owner
-        }
+            owner: user.owner,
+        };
         req.user = secureUser;
         next();
     } catch (err) {

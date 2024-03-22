@@ -16,7 +16,7 @@ const LoginPage = () => {
     const [owner, setOwner] = useState(true);
     const [error, setError] = useState("");
 
-    const { appApi, setUserDetails } = useAppContext();
+    const { appApi, setUserDetails, setIsAuthentificated } = useAppContext();
 
     const navigate = useNavigate();
 
@@ -35,8 +35,10 @@ const LoginPage = () => {
             await appApi
                 .login(user)
                 .then((response) => {
-                    setUserDetails(response.data.user);
                     localStorage.setItem("accessToken", response.data.token);
+                    setUserDetails(response.data.user);
+                    setIsAuthentificated(true);
+                    
                     navigate("/dashboard");
                 })
                 .catch((error) => {
@@ -156,7 +158,7 @@ const LoginPage = () => {
                                 }
                                 placeholder="E-mail"
                             />
-                            <div>
+                            <div className="ownership">
                                 <span>
                                     Êtes-vous propriétaire d'un chien ?{" "}
                                 </span>

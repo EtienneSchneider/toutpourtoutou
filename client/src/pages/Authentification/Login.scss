@@ -52,6 +52,14 @@
         }
     }
 
+    .ownership {
+        margin: 12px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+
     .error {
         color: rgb(251, 61, 61);
         text-decoration: underline;
