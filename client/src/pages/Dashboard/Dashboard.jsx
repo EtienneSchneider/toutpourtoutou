@@ -1,6 +1,7 @@
 import "./Dashboard.scss";
-import { useState, useEffect, useContext } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { getAgeOfDog } from "../../helpers/fonction";
 import Button from "../../components/clickables/Button";
 import ProductPreview from "../../components/dashboard_components/ProductPreview";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
@@ -47,7 +48,11 @@ const DashBoard = () => {
                 )}
                 {selectedDogData ? (
                     <ul className="carac-list col-gray">
-                        <li>{selectedDogData.identification.birthdate}</li>
+                        <li>
+                            {getAgeOfDog(
+                                selectedDogData.identification.birthDate,
+                            )}
+                        </li>
                         <li>{selectedDogData.identification.breed}</li>
                         <li>
                             {selectedDogData.identification.gender
@@ -95,7 +100,9 @@ const DashBoard = () => {
                                     title={prod.brand}
                                     desc={prod.description}
                                     img_url={
-                                        "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
+                                        prod.image
+                                            ? prod.image
+                                            : "https://cashmailsystemaveceva.websites.co.in/dummytemplate/img/product-placeholder.png"
                                     }
                                 />
                             );

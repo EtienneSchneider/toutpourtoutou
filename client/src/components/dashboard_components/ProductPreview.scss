@@ -10,8 +10,15 @@
     .img-container {
         background-color: var(--white);
         height: 128px;
-        aspect-ratio: 1;
+        min-width: 128px;
         border-radius: 16px;
+        overflow: hidden;
+
+        img {
+            width: 128px;
+            height: 128px;
+            object-fit: cover;
+        }
     }
 
     .text-container {

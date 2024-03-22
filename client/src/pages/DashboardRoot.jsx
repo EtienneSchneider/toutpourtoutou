@@ -64,7 +64,6 @@ const DashBoardRoot = () => {
                     .then((response) => {
                         const prodToAdd = response.data;
                         if (prodToAdd) {
-                            console.log(prodToAdd);
                             setProducts((prevProducts) => [
                                 ...prevProducts,
                                 prodToAdd,

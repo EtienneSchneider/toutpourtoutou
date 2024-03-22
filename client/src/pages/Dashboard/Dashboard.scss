@@ -29,10 +29,16 @@
         }
 
         .img-container {
-            width: 128px;
-            aspect-ratio: 1;
-            overflow: hidden;
+            height: 128px;
+            min-width: 128px;
             border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 128px;
+                height: 128px;
+                object-fit: cover;
+            }
         }
     }
 
