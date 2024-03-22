@@ -1,75 +1,144 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Products.scss";
 import DeliveryProduct from "../components/product_components/DeliveryProduct";
+import { AppApi } from "../../Service/Api";
 
 const Products = () => {
-    const [products, setProducts] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
-    const [searchTerm, setSearchTerm] = useState("");
+    const [products, setProducts] = useState([]); 
+    const [order, setOrder] = useState([]); 
+    const [searchValue, setSearchValue] = useState(""); 
+    const [sortValue, setSortValue] = useState("az");
+    const [sizeFilter, setSizeFilter] = useState("any");
+    const [foodFilter, setFoodFilter] = useState("");
 
-    const chunkArray = (arr, chunkSize) => {
-        const chunks = [];
-        for (let i = 0; i < arr.length; i += chunkSize) {
-            chunks.push(arr.slice(i, i + chunkSize));
+    const getPriceValue = (price) => {
+        return price.replace("€", "").replace(",", ".");
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const productsResponse = await AppApi().getAllProducts();
+                setProducts(productsResponse.data);
+
+                const orderResponse = await AppApi().getUserOrders();
+                setOrder(orderResponse.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchData(); 
+    }, []);
+
+    const filteredProducts = products.filter(product =>
+        product.brand.toLowerCase().includes(searchValue.toLowerCase()) &&
+        (sizeFilter === "any" || product.dogType === sizeFilter || sizeFilter === "") &&
+        (foodFilter === "any" || product.type === foodFilter || foodFilter === "")
+    );
+
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+        if (sortValue === "az") {
+            return a.brand.localeCompare(b.brand);
+        } else if (sortValue === "za") {
+            return b.brand.localeCompare(a.brand);
+        } else if (sortValue === "asc") {
+            return parseFloat(getPriceValue(a.price)) - parseFloat(getPriceValue(b.price));
+        } else if (sortValue === "desc") {
+            return parseFloat(getPriceValue(b.price)) - parseFloat(getPriceValue(a.price));
         }
-        return chunks;
-    };
-
-    const productChunks = chunkArray(products, 3); // Diviser les produits en groupes de 3 éléments
-
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
+    });
 
     return (
         <>
-            <div className="container_product_top">
+            <div className="container-product-top">
                 <h1 className="header" id="type">
                     Votre prochaine commande
                 </h1>
                 <div className="delivery">
                     <div className="delivery-list">
-                        {products.map((product, index) => (
-                            <DeliveryProduct
-                                key={index}
-                                title={"Friskies® Light"}
-                                desc="Croquettes allégées au poulet pour chien en surpoids"
-                                img_url={
-                                    "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
-                                }
-                            />
-                        ))}
+                        {order.length > 0 ? (
+                            order.map((product, index) => (
+                                <DeliveryProduct
+                                    key={index}
+                                    title={product.brand} 
+                                    desc={product.description}
+                                    img={"https://static8.depositphotos.com/1338574/829/i/450/depositphotos_8292951-stock-photo-the-letter-c-in-gold.jpg"}
+                                    price={product.price}
+                                />
+                            ))
+                        ) : (
+                            <p className="noOrder">Vous n'avez aucune commande pour l'instant</p>
+                        )}
                     </div>
                 </div>
             </div>
 
-            <div className="container_product_top">
+            <div className="container-product-bottom">
                 <h1 className="header" id="type">
                     Notre catalogue
                 </h1>
-                <input
-                    type="text"
-                    placeholder="Rechercher par titre..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
-                />
-            </div>
+                
+                <div className="filter">
+                    <h2 className="subheadertext">Type</h2>
 
-            <div className="container_product_top">
-                <div className="delivery" id="delivery2">
-                    {productChunks.map((chunk, index) => (
-                        <div key={index} className="delivery-row">
-                            {chunk.map((product, idx) => (
-                                <DeliveryProduct
-                                    key={idx}
-                                    title={"Friskies® Light"}
-                                    desc="Croquettes allégées au poulet pour chien en surpoids"
-                                    img_url={
-                                        "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
-                                    }
-                                />
-                            ))}
-                        </div>
-                    ))}
+                    <div className="searchFilter-bar">
+                        <input
+                        className="searchBar"
+                        type="text"
+                        placeholder="Rechercher un produit"
+                        value={searchValue}
+                        onChange={(e) => setSearchValue(e.target.value)}
+                    />
+
+                    <select className="filter_bar" onChange={(e) => setSortValue(e.target.value)}>
+                        <option value="">Trier par</option>    
+                        <option value="az">De A à Z</option>
+                        <option value="za">De Z à A</option>
+                        <option value="asc">Du - au + cher</option>
+                        <option value="desc">Du + au - cher</option>
+                    </select>
+                    </div>
+
+                    <select name="nourriture" id="nourriture" onChange={(e) => setFoodFilter(e.target.value)}>
+                        <option value="">Non spécifié</option>
+                        <option value="food">Nourriture</option>
+                        <option value="toy">Jouet</option>
+                        <option value="hygiene">Hygiène</option>
+                    </select>
+
+                    <select name="Croquette" id="Croquette" onChange={(e) => setSizeFilter(e.target.value)}>
+                        <option value="">Non spécifié</option>
+                        <option value="Croquette">Croquette</option>
+                        <option value="Patés">Paté</option>
+                    </select>
+
+                    <h2 className="subheadertext">Marque</h2>
+                    <select name="marque" id="marque">
+                        <option value="nothing">Sans marque</option>
+                        <option value="royaleCanin">Royale Canin</option>
+                        <option value="Purina">Purina</option>
+                    </select>
+
+                    <h2 className="subheadertext">Taille du chien</h2>
+                    <select name="tailleChien" id="tailleChien" onChange={(e) => setSizeFilter(e.target.value)}>
+                        <option value="">Non spécifié</option>
+                        <option value="dog">Adulte</option>
+                        <option value="puppy">Enfant</option>
+                        <option value="sterilized">Stérilisé</option>
+                    </select>
+
+                    <div className="product-list">
+                        {sortedProducts.map((product, idx) => (
+                            <DeliveryProduct
+                                key={idx}
+                                title={product.brand} 
+                                desc={product.description}
+                                img={product.image}
+                                price={product.price}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </>

@@ -49,12 +49,39 @@ function Content() {
 
 function App() {
     return (
-        <Router>
-            <AppContextProvider>
+        <AppContextProvider>
+            <Router>
                 <NavBar />
-                <Content />
-            </AppContextProvider>
-        </Router>
+                <div className="main-container">
+                    <Routes>
+                        <Route
+                            path="/dashboard"
+                            exact
+                            element={<DashBoardRoot />}
+                        >
+                            <Route
+                                path="/dashboard/:dogId"
+                                element={<DashBoard />}
+                            />
+
+                            
+
+
+                        </Route>
+                        <Route path="/products" exact element={<Products />} />
+                        <Route path="/new-dog" exact element={<NewDogPage />} />
+                        <Route path="/info" exact element={<SingleProductPage title={'title'} desc={'test desc'} price={5} img_url={'https://image.spreadshirtmedia.net/image-server/v1/products/T1459A839PA4459PT28D158439036W10000H9424/views/1,width=550,height=550,appearanceId=839,backgroundColor=F2F2F2/dz-algerie-autocollant.jpg'} />} />
+                        <Route
+                            path="/comptest"
+                            exact
+                            element={<ComponentTest />}
+                        />
+                        <Route path="/login" exact element={<LoginPage />} />
+                        <Route path="*" element={<p>not found</p>} />
+                    </Routes>
+                </div>
+            </Router>
+        </AppContextProvider>
     );
 }
 
