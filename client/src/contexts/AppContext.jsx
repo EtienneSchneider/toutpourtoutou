@@ -18,13 +18,13 @@ export const AppContextProvider = ({ children }) => {
     const [isAuthentificated, setIsAuthentificated] = useState(false);
 
     const appApi = useMemo(() => api(), []);
-    
+
     const AppContextValues = {
         appApi,
         isAuthentificated,
         userDetails,
         setUserDetails,
-        setIsAuthentificated
+        setIsAuthentificated,
     };
     return (
         <AppContext.Provider value={AppContextValues}>

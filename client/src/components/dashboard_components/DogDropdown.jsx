@@ -1,6 +1,6 @@
 import "./DogDropdown.scss";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const DogDropdown = ({ dogList, selectedDog }) => {
     const [open, setOpen] = useState(false);

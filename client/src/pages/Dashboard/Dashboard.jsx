@@ -4,21 +4,13 @@ import { useOutletContext, useParams } from "react-router-dom";
 import Button from "../../components/clickables/Button";
 import ProductPreview from "../../components/dashboard_components/ProductPreview";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
-import { AppContext } from "../../contexts/AppContext";
 
 const DashBoard = () => {
-    const context = useContext(AppContext);
-    const { dogList } = useOutletContext();
-    const selectedDogId = useParams().dogId;
+    const { dogList, selectedDogId, order } = useOutletContext();
     const [selectedDogData, setSelectedDogData] = useState(null);
 
     const [products, setProducts] = useState([1, 2, 3, 4, 5]);
-    const [dogsCaracs, setDogCaracs] = useState([
-        "2 mois",
-        "Cane Corso",
-        "Femelle",
-        "Bonne santé",
-    ]);
+
     const [isLoaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -26,20 +18,26 @@ const DashBoard = () => {
             setSelectedDogData(
                 dogList.find((dog) => dog._id === selectedDogId),
             );
-            console.log(dogList.find((dog) => dog._id === selectedDogId));
-
             setLoaded(true);
         }
-    }, [selectedDogId]);
+    }, [selectedDogId, dogList]);
 
     return { isLoaded } ? (
         <div className="DashBoard">
             <div className="dog-card">
                 <div className="img-container">
-                    <img
-                        src="https://i.pinimg.com/originals/ba/fa/eb/bafaebfeeca3e63ac21e9efd3c9406eb.jpg"
-                        alt=""
-                    />
+                    {selectedDogData &&
+                    selectedDogData.identification.picture ? (
+                        <img
+                            src={selectedDogData.identification.picture}
+                            alt=""
+                        />
+                    ) : (
+                        <img
+                            src="https://cdn-icons-png.freepik.com/512/4823/4823463.png"
+                            alt=""
+                        />
+                    )}
                 </div>
                 {dogList ? (
                     <DogDropdown
@@ -86,9 +84,10 @@ const DashBoard = () => {
                     </p>
                 </div>
                 <div className="delivery-list">
-                    {products.map(() => {
+                    {products.map((i) => {
                         return (
                             <ProductPreview
+                                key={i}
                                 title={"Friskies® Light"}
                                 desc="Croquettes allégées au poulet pour chien en surpoids"
                                 img_url={

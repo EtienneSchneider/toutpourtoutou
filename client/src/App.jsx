@@ -20,11 +20,10 @@ function Content() {
         if (localStorage.getItem("accessToken")) {
             appApi
                 .getAuthStatus()
-                .then((response) => {
-                })
+                .then((response) => {})
                 .catch((error) => {
                     setIsAuthentificated(false);
-                    localStorage.removeItem("accessToken")
+                    localStorage.removeItem("accessToken");
                     navigate("/login");
                 });
         } else {
