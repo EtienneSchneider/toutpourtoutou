@@ -1,6 +1,6 @@
 import Button from "../components/clickables/Button";
 import ProductPreview from "../components/dashboard_components/ProductPreview";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBar/NavBar";
 
 const ComponentTest = () => {
     return (

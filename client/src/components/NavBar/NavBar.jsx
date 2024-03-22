@@ -3,7 +3,6 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const NavBar = () => {
     const location = useLocation();
-
     return (
         <nav className="bg-white">
             <ul className="col-gray">

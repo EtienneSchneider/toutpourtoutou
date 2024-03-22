@@ -2,8 +2,8 @@ import "./NewDogPage.scss";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import DogFormSection from "../components/dog_components/DogFormSection";
-import Button from "../components/clickables/Button";
+import DogFormSection from "../../components/dog_components/DogFormSection";
+import Button from "../../components/clickables/Button";
 import axios from "axios";
 
 const NewDogPage = () => {
