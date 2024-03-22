@@ -1,23 +1,29 @@
 .fiche {
     background-color: white;
     height: 44rem;
-    width: 112rem;
-    margin: -1rem;
-    margin-left: -0.5rem;
+    width: 111rem;
     border-radius: 1.5rem;
+    margin-top: 65px;
+    margin-left: 4rem;
 }
 
-.product_infos {
+.product-infos {
     display: flex;
     flex-direction: column;
-}
-
-.product_infos {
     margin-left: 55rem;
+    width: 509px;
+    height: 692px;
+    padding-top: 58px;
+
+    > .subheadertext {
+        margin-bottom: 32px; /* Ajoute un espace de 32px en dessous de chaque élément */
+    }
 }
 
-.product_img {
+.product-img {
     float: left;
-    width: 40rem;
+    width: 597px;
+    height: 576px;
     margin-left: 2rem;
+    margin: 60px;
 }

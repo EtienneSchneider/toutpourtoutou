@@ -2,19 +2,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 10rem;
-    padding: 11px;
+    width: 109px;
+    height: 50px;
 }
 
 .count {
     position: relative;
     font-weight: bold;
-    color: black;
+    text-align: center;
+    color: whi;
 }
 
 .count-wrapper button {
-    padding: 10px 15px;
-    border: 1px solid white;
     border-radius: 45px;
     outline: none;
     box-shadow: 0 4px 12px -2px rgba(100, 110, 150, 0.2);
@@ -23,13 +22,16 @@
     color: white;
     cursor: pointer;
     transition: 0.2s all;
-    width: 2.9rem;
+    width: 34px; // Ajuste la largeur du bouton à 34px
+    height: 34px; // Ajuste la hauteur du bouton à 34px
 
     box-shadow: 0 3px 8px -1px rgba(100, 110, 150, 0.2);
-    color: black;
+    color: white;
 
     &:active {
         box-shadow: none;
         transform: scale(0.9);
     }
 }
+
+

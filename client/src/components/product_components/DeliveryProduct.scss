@@ -1,6 +1,6 @@
 .DeliveryProduct {
-    height: 470px; /* Hauteur minimale de la carte */
-    width: 280px; /* Largeur de la carte */
+    height: 380px; /* Hauteur minimale de la carte */
+    width: 256px; /* Largeur de la carte */
     display: flex;
     flex-direction: column; /* Le texte en dessous de l'image */
     justify-content: flex-start;
@@ -11,30 +11,62 @@
     margin-left: 0.5rem;
     margin-bottom: 2rem;
 
+    span {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 15px;
+        overflow: hidden; 
+        text-overflow: ellipsis; 
+        white-space: nowrap; 
+    }
+
     .img-container {
         background-color: var(--white);
-        width: 100%; /* Prend toute la largeur de la carte */
-        height: 300px; /* Hauteur de l'image */
-        aspect-ratio: 1; /* Garde le ratio de l'image */
-        border-radius: 16px;
-        
+        width: 252px;
+        height: 256px;
+        aspect-ratio: 1;
+        border-top-left-radius: 16px; 
+        border-top-right-radius: 16px; 
+        margin-top: -14px;
+
+        .img{
+           
+            width: 253px;
+            height: 223px;
+            object-fit: contain;
+            border-radius: 25px;
+            
+        }
+    }
+
+    
+    
+    .info-container {
+        width: 224px; 
+        height: 124px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
     }
 
     .text-container {
-        width: 100%; /* Prend toute la largeur de la carte */
-        padding-top: 16px; /* Espacement entre l'image et le texte */
+        width: 224px; 
+        height: 95px;
+        padding: 8px 0; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        margin-top: -1rem;
     }
 }
 
-
 .buttonPlusProduct {
-    margin-left: 2.5rem;
-    margin-top: -0.5rem;
-    backdrop-filter: blur(1px); 
-
+    width: 109px;
+    height: 50px;
+    backdrop-filter: blur(1px);
+    margin-left: 25%;
+    margin-top: -16%;
 }
-
-
-
-
-
