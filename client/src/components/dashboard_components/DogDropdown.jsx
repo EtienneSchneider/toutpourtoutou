@@ -28,7 +28,10 @@ const DogDropdown = ({ dogList, selectedDog }) => {
                     {dogList.map((dog) =>
                         dog._id !== selectedDog ? (
                             <li className="dog-dropdown-item" key={dog._id}>
-                                <Link to={"/dashboard/" + dog._id}>
+                                <Link
+                                    to={"/dashboard/" + dog._id}
+                                    onClick={() => setOpen(false)}
+                                >
                                     {dog.identification.name}
                                 </Link>
                             </li>
@@ -37,7 +40,7 @@ const DogDropdown = ({ dogList, selectedDog }) => {
                         ),
                     )}
                     <li className="dog-dropdown-add subheadertext bg-accent col-white">
-                        <Link>+</Link>
+                        <Link to="/new-dog">+</Link>
                     </li>
                 </ul>
             ) : (

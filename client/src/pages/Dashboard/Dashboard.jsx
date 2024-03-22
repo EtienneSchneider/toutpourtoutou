@@ -1,13 +1,17 @@
 import "./Dashboard.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
-import Button from "../components/clickables/Button";
-import ProductPreview from "../components/dashboard_components/ProductPreview";
-import DogDropdown from "../components/dashboard_components/DogDropdown";
+import Button from "../../components/clickables/Button";
+import ProductPreview from "../../components/dashboard_components/ProductPreview";
+import DogDropdown from "../../components/dashboard_components/DogDropdown";
+import { AppContext } from "../../contexts/AppContext";
 
 const DashBoard = () => {
+    const context = useContext(AppContext);
     const { dogList } = useOutletContext();
     const selectedDogId = useParams().dogId;
+    const [selectedDogData, setSelectedDogData] = useState(null);
+
     const [products, setProducts] = useState([1, 2, 3, 4, 5]);
     const [dogsCaracs, setDogCaracs] = useState([
         "2 mois",
@@ -20,9 +24,14 @@ const DashBoard = () => {
     useEffect(() => {
         // console.log(dogList);
         if (dogList) {
+            setSelectedDogData(
+                dogList.find((dog) => dog._id === selectedDogId),
+            );
+            console.log(dogList.find((dog) => dog._id === selectedDogId));
+
             setLoaded(true);
         }
-    }, []);
+    }, [selectedDogId]);
 
     return { isLoaded } ? (
         <div className="DashBoard">
@@ -41,11 +50,26 @@ const DashBoard = () => {
                 ) : (
                     <></>
                 )}
-                <ul className="carac-list col-gray">
-                    {dogsCaracs.map((carac) => {
-                        return <li>{carac}</li>;
-                    })}
-                </ul>
+                {selectedDogData ? (
+                    <ul className="carac-list col-gray">
+                        <li>{selectedDogData.identification.birthdate}</li>
+                        <li>{selectedDogData.identification.breed}</li>
+                        <li>
+                            {selectedDogData.identification.gender
+                                ? "Mâle"
+                                : "Femelle"}
+                        </li>
+                        <li>
+                            {selectedDogData.health.heathIssues.length == 0
+                                ? "Bonne santé"
+                                : selectedDogData.health.map(
+                                      (healthProb) => healthProb,
+                                  )}
+                        </li>
+                    </ul>
+                ) : (
+                    <></>
+                )}
                 <Button
                     text={"Profil complet"}
                     link={"/dog-profile/" + selectedDogId}
