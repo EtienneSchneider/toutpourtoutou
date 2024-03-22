@@ -37,7 +37,7 @@ const LoginPage = () => {
                 .then((response) => {
                     setUserDetails(response.data.user);
                     localStorage.setItem("accessToken", response.data.token);
-                    navigate("/");
+                    navigate("/dashboard");
                 })
                 .catch((error) => {
                     alert(error);
