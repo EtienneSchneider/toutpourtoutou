@@ -6,10 +6,8 @@ import ProductPreview from "../../components/dashboard_components/ProductPreview
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
 
 const DashBoard = () => {
-    const { dogList, selectedDogId, order } = useOutletContext();
+    const { dogList, selectedDogId, order, products } = useOutletContext();
     const [selectedDogData, setSelectedDogData] = useState(null);
-
-    const [products, setProducts] = useState([1, 2, 3, 4, 5]);
 
     const [isLoaded, setLoaded] = useState(false);
 
@@ -79,23 +77,32 @@ const DashBoard = () => {
             <div className="delivery">
                 <div className="delivery-desc">
                     <h2 className="subheadertext">Votre prochaine commande</h2>
-                    <p className="col-gray">
-                        Statut : envoyé <br /> Livraison prévue : 16 avril 2024
-                    </p>
+                    {order ? (
+                        <p className="col-gray">
+                            Statut : {order.status} <br /> Livraison prévue le{" "}
+                            {order.orderDate}
+                        </p>
+                    ) : (
+                        <p className="col-gray">Aucune commande prévue</p>
+                    )}
                 </div>
                 <div className="delivery-list">
-                    {products.map((i) => {
-                        return (
-                            <ProductPreview
-                                key={i}
-                                title={"Friskies® Light"}
-                                desc="Croquettes allégées au poulet pour chien en surpoids"
-                                img_url={
-                                    "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
-                                }
-                            />
-                        );
-                    })}
+                    {products ? (
+                        products.map((prod) => {
+                            return (
+                                <ProductPreview
+                                    key={prod.serialNumber}
+                                    title={prod.brand}
+                                    desc={prod.description}
+                                    img_url={
+                                        "https://www.purina.fr/sites/default/files/styles/product_380x380/public/2022-01/1.%20MHI%2007613033831287_H1N1_FR_44074316-RESIZED.png?itok=cM3h0tUG"
+                                    }
+                                />
+                            );
+                        })
+                    ) : (
+                        <></>
+                    )}
                 </div>
             </div>
             <div className="articles">

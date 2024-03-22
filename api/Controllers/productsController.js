@@ -16,6 +16,23 @@ export const addProduct = async (req, res) => {
     }
 };
 
+export const getProduct = async (req, res) => {
+    try {
+        const product = await Product.findOne({
+            serialNumber: req.query.serialNumber,
+        });
+
+        if (!product) {
+            return res.status(401).send("Could not find this product.");
+        }
+
+
+        res.status(200).json(product);
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();

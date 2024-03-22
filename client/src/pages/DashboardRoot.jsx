@@ -9,6 +9,8 @@ const DashBoardRoot = () => {
 
     const [dogList, setDogList] = useState(null);
     const [order, setOrder] = useState(null);
+    const [products, setProducts] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,15 +40,13 @@ const DashBoardRoot = () => {
                 })
                 .then((response) => {
                     const allOrders = response.data;
-                    const latestOrder = allOrders.sort(
-                        (a, b) => new Date(b.orderDate) - new Date(a.orderDate),
-                    );
-                    console.log(allOrders);
-                    setOrder(latestOrder);
-                })
-                .then((response) => {
-                    setDogList(response.data);
-                    navigate("/dashboard/" + response.data[0]._id);
+                    if (allOrders.length > 0) {
+                        const latestOrder = allOrders.sort(
+                            (a, b) =>
+                                new Date(b.orderDate) - new Date(a.orderDate),
+                        )[0];
+                        setOrder(latestOrder);
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -54,12 +54,37 @@ const DashBoardRoot = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (order && order.orderedProducts.length > 0) {
+            for (let prod of order.orderedProducts) {
+                appApi
+                    .getProduct({
+                        serialNumber: prod.serialNumber,
+                    })
+                    .then((response) => {
+                        const prodToAdd = response.data;
+                        if (prodToAdd) {
+                            console.log(prodToAdd);
+                            setProducts((prevProducts) => [
+                                ...prevProducts,
+                                prodToAdd,
+                            ]);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+        }
+    }, [order]);
+
     return { dogList } ? (
         <Outlet
             context={{
                 dogList: dogList,
                 selectedDogId: selectedDogId,
                 order: order,
+                products: products,
             }}
         />
     ) : (

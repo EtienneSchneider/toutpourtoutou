@@ -51,6 +51,7 @@ function App() {
     return (
         <Router>
             <AppContextProvider>
+                <NavBar />
                 <Content />
             </AppContextProvider>
         </Router>
