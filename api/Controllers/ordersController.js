@@ -1,16 +1,11 @@
 import Order from "../Models/orders.model.js";
 import Product from "../Models/products.model.js";
 import mongoose from "mongoose";
+import { generateRandomString } from "../Utils/Helpers/functions.js";
 
 
 export const createOrder = async (req, res) => {
-    const order = await Order.findOne({
-        orderNumber: req.body.orderNumber,
-    });
-
-    if (order) {
-        return res.status(401).send("Order number asigned to another order");
-    }
+    req.body.orderNumber = generateRandomString(10);
 
     for (const orderedProduct in req.body.productsOrdered) {
         const product = await Product.findOne({

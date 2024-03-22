@@ -60,8 +60,8 @@ Dog adding route.
   },
   health: {
     sterilized: boolean,
-    heathIssues: array,
-    otherHeathIssues: array,
+    healthIssues: array,
+    otherHealthIssues: array,
     treatments: array,
     otherTreatments: array,
     weight: array, (couples of date JJ/MM/YYYY and weight) : [{date: ..., weight: ...}]

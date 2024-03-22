@@ -19,6 +19,10 @@ const OrderSchema = Schema({
         type: Schema.Types.ObjectId, // Utilisation de Schema.Types.ObjectId
         ref: 'User', // référence à un autre modèle d'utilisateur si nécessaire
         required: true
+    },
+    status: {
+        type: String,
+        required: true
     }
 });
 
