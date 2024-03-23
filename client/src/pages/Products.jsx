@@ -131,22 +131,9 @@ const Products = () => {
                         <option value="hygiene">Hygiène</option>
                     </select>
 
-                    <select
-                        name="Croquette"
-                        id="Croquette"
-                        onChange={(e) => setSizeFilter(e.target.value)}
-                    >
-                        <option value="">Non spécifié</option>
-                        <option value="Croquette">Croquette</option>
-                        <option value="Patés">Paté</option>
-                    </select>
+                    
 
-                    <h2 className="subheadertext">Marque</h2>
-                    <select name="marque" id="marque">
-                        <option value="nothing">Sans marque</option>
-                        <option value="royaleCanin">Royale Canin</option>
-                        <option value="Purina">Purina</option>
-                    </select>
+                    
 
                     <h2 className="subheadertext">Taille du chien</h2>
                     <select
@@ -166,7 +153,7 @@ const Products = () => {
                                 key={idx}
                                 title={product.brand}
                                 desc={product.description}
-                                img={product.image}
+                                img={product.image || "https://cashmailsystemaveceva.websites.co.in/dummytemplate/img/product-placeholder.png"}
                                 price={product.price}
                             />
                         ))}
