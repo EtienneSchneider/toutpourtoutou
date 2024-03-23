@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 import "./DeliveryProduct.scss";
 import "./ProductCounter.scss";
-import ButtonPlus from "./ProductCounter";
+import ProductCounter from "./ProductCounter";
+import { useState } from "react";
 
 const DeliveryProduct = ({ title, desc, link, img, price }) => {
+    const [quantity, setQuantity] = useState(0)
     return (
         <Link to={link} className="DeliveryProduct bg-default">
             <div className="img-container">
                 <img className="img" src={img} alt="" />
                 <div className="buttonPlusProduct">
-                    <ButtonPlus />
+                    <ProductCounter value={quantity} updateCounter={(count) => setQuantity(count)} />
                 </div>
             </div>
 

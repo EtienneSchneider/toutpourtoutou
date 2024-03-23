@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./ProductCounter.scss";
 
 const ProductCounter = ({value, updateCounter}) => {
