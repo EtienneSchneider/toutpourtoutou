@@ -17,9 +17,9 @@
 
     p {
         font-size: 15px;
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .img-container {
@@ -27,38 +27,51 @@
         width: 252px;
         height: 256px;
         aspect-ratio: 1;
-        border-top-left-radius: 16px; 
-        border-top-right-radius: 16px; 
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
         margin-top: -14px;
 
-        .img{
-           
+        .img {
             width: 253px;
             height: 223px;
             object-fit: contain;
             border-radius: 25px;
-            
         }
     }
 
-    
-    
     .info-container {
-        width: 224px; 
+        width: 224px;
         height: 124px;
         display: flex;
         flex-direction: column;
-        justify-content: center; 
-        align-items: center; 
+        justify-content: center;
+        align-items: center;
+        .brandContainer {
+            display: flex;
+            gap: 8px;
+            color: var(--black);
+            button {
+                border-radius: 45px;
+                width: 24px;
+
+                background-color: var(--accent);
+                svg {
+                    margin: auto;
+                    width: 12px;
+                    height: 12px;
+                    fill: white;
+                }
+            }
+        }
     }
 
     .text-container {
-        width: 224px; 
+        width: 224px;
         height: 95px;
-        padding: 8px 0; 
+        padding: 8px 0;
         display: flex;
         flex-direction: column;
-        justify-content: center; 
+        justify-content: center;
         margin-top: -1rem;
     }
 }

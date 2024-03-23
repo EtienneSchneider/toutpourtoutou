@@ -6,7 +6,6 @@ import NewDogPage from "./pages/NewDog/NewDogPage.jsx";
 import Products from "./pages/Products.jsx";
 import ComponentTest from "./pages/ComponentsTest";
 import NavBar from "./components/NavBar/NavBar.jsx";
-import SingleProductPage from "./pages/SingleProductPage";
 import LoginPage from "./pages/Authentification/LoginPage";
 import { AppContextProvider, useAppContext } from "./contexts/AppContext.jsx";
 import { useEffect } from "react";

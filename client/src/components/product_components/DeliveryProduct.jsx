@@ -1,28 +1,26 @@
-import { Link } from "react-router-dom";
 import "./DeliveryProduct.scss";
 import "./ProductCounter.scss";
-import ProductCounter from "./ProductCounter";
-import { useState } from "react";
+import { GoArrowRight } from "react-icons/go";
 
-const DeliveryProduct = ({ title, desc, link, img, price }) => {
-    const [quantity, setQuantity] = useState(0)
+const DeliveryProduct = ({product, focusOnProduct}) => {
+
     return (
-        <Link to={link} className="DeliveryProduct bg-default">
+        <div className="DeliveryProduct bg-default">
             <div className="img-container">
-                <img className="img" src={img} alt="" />
-                <div className="buttonPlusProduct">
-                    <ProductCounter value={quantity} updateCounter={(count) => setQuantity(count)} />
-                </div>
+                <img className="img" src={product.image ? product.image : 'https://cashmailsystemaveceva.websites.co.in/dummytemplate/img/product-placeholder.png'} alt=""/>
             </div>
 
             <div className="info-container">
                 <div className="text-container"> 
-                <span className="col-black">{title}</span>
-                <p className="col-black">{price}</p>
-                <p className="col-gray">{desc}</p>
+                <div className="brandContainer">
+                    {product.brand}
+                    <button onClick={focusOnProduct}><GoArrowRight /></button>
+                </div>
+                <p className="col-black">{product.price}</p>
+                <p className="col-gray">{product.description}</p>
                 </div>
             </div>
-        </Link>
+        </div >
     );
 };
 

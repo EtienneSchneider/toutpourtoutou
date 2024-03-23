@@ -24,7 +24,7 @@ const ProductSchema = mongoose.Schema(
             enum: ["dog", "puppy", "sterilized","any"],
             default: "any",
         },
-        image: {
+        x: {
             type: String,
             required: true
         },
