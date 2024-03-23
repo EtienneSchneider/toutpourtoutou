@@ -1,7 +1,7 @@
 import "./Dashboard.scss";
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { getAgeOfDog } from "../../helpers/fonction";
+import { getAgeOfDog } from "../../helpers/functions";
 import Button from "../../components/clickables/Button";
 import ProductPreview from "../../components/dashboard_components/ProductPreview";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";

@@ -1,25 +1,15 @@
 import React, { useState } from "react";
 import "./ProductCounter.scss";
 
-const ProductCounter = () => {
-    const [count, setCount] = useState(1);
+const ProductCounter = ({value, updateCounter}) => {
 
     function increase() {
-        setCount(count + 1);
+        updateCounter(value + 1)
     }
 
     function decrease() {
-        if (count > 0) {
-            setCount(count - 1);
-        }
-    }
-
-    function onCountEdit(event) {
-        let countContent = Number(event.target.textContent);
-        if (Number.isNaN(countContent)) {
-            setCount(Math.floor(Math.random() * 10));
-        } else {
-            setCount(countContent);
+        if (value > 0) {
+            updateCounter(value - 1)
         }
     }
 
@@ -28,9 +18,8 @@ const ProductCounter = () => {
             <button onClick={decrease}>-</button>
             <span
                 className="count"
-                onBlur={onCountEdit}
             >
-                {count}
+                {value}
             </span>
             <button onClick={increase}>+</button>
         </div>

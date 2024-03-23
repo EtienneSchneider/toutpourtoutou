@@ -50,3 +50,28 @@ export const getAgeOfDog = (birthDate) => {
 
     return result;
 };
+
+export const formatDate = (dateString) => {
+    const dateObj = new Date(dateString);
+    const day = String(dateObj.getDate()).padStart(2, "0");
+    const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const year = dateObj.getFullYear();
+
+    return `${day}/${month}/${year}`;
+};
+
+export function getTodayDate() {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1; // Les mois vont de 0 à 11, donc on ajoute 1
+    let year = today.getFullYear();
+
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+
+    return day + '/' + month + '/' + year;
+}

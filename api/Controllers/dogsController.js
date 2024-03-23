@@ -42,34 +42,12 @@ export const sanitizeDogData = async (req, res, next) => {
 
     const healthRule = {
         sterilized: "boolean",
-        healthIssues: "object",
-        otherHealthIssues: "string",
-        treatments: "object",
-        otherTreatments: "string",
-        // weight: "object"
-    };
-
-    const feedRule = {
-        meals: "number",
-        feedBasis: "object",
-        otherFeedBasis: "object",
-    };
-
-    const activityRule = {
-        outings: "number"
-    };
-
-    const educationRule = {
-        training: "boolean",
-        trainingDog: "boolean",
+        weight: "object"
     };
 
     if (
         !sanitizeObject(data.identification, identificationRule) || 
         !sanitizeObject(data.health, healthRule) || 
-        !sanitizeObject(data.feed, feedRule) || 
-        !sanitizeObject(data.activity ,activityRule) || 
-        !sanitizeObject(data.education ,educationRule) || 
         typeof data.chipNumber !== "string" || 
         data.owner === undefined
     ) {
