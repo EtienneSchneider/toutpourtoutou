@@ -2,7 +2,7 @@ import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashBoardRoot from "./pages/DashboardRoot";
 import DashBoard from "./pages/Dashboard/Dashboard";
-import NewDogPage from "./pages/Products.jsx";
+import NewDogPage from "./pages/NewDog/NewDogPage.jsx";
 import Products from "./pages/Products.jsx";
 import ComponentTest from "./pages/ComponentsTest";
 import NavBar from "./components/NavBar/NavBar.jsx";
