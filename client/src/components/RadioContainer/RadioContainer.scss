@@ -1,0 +1,19 @@
+.radioContainer {
+    display: flex;
+    gap: 8px;
+    
+    .radioButton {
+        width: fit-content;
+        display: inline-block;
+        padding: 1em 2em;
+        background-color: var(--primary-background);
+        border: 1px solid transparent;
+        border-radius: 40px;
+        cursor: pointer;
+
+        &.selected {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import "./DogDropdown.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import React from "react";
 
 const DogDropdown = ({ dogList, selectedDog }) => {
     const [open, setOpen] = useState(false);
@@ -31,15 +32,16 @@ const DogDropdown = ({ dogList, selectedDog }) => {
                                 <Link
                                     to={"/dashboard/" + dog._id}
                                     onClick={() => setOpen(false)}
+                                    key={dog._id} // Ajout de la clé unique
                                 >
                                     {dog.identification.name}
                                 </Link>
                             </li>
                         ) : (
-                            <></>
+                            <React.Fragment key={dog._id}></React.Fragment> // Ajout de la clé unique pour l'élément vide
                         ),
                     )}
-                    <li className="dog-dropdown-add subheadertext bg-accent col-white">
+                    <li className="dog-dropdown-add subheadertext bg-accent col-white" key="add-dog">
                         <Link to="/new-dog">+</Link>
                     </li>
                 </ul>

@@ -28,7 +28,6 @@ const ProductCounter = () => {
             <button onClick={decrease}>-</button>
             <span
                 className="count"
-                contentEditable="false"
                 onBlur={onCountEdit}
             >
                 {count}

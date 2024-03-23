@@ -1,39 +1,12 @@
 import "./NewDogPage.scss";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import DogFormSection from "../components/dog_components/DogFormSection";
 import ProductCounter from "../components/product_components/ProductCounter";
-import Button from "../components/clickables/Button";
-import BooleanButton from "../components/BooleanButton/BooleanButton";
-import axios from "axios";
+import RadioContainer from "../components/RadioContainer/RadioContainer";
+import MultiSelect from "../components/Multiselect/Multiselect";
 
 const NewDogPage = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm();
-
-    const [formData, setFormData] = useState({
-        dogName: "",
-        // dogPicture="",
-        birthDate: "",
-        gender: false, //false = male; true = femelle;
-        breed: "",
-        sterilized: false,
-        healthIssues: "",
-        otherHealthIssues: "",
-        treatments: "",
-        otherTreatments: "",
-        meals: 0,
-        feedBasis: "",
-        otherFeedBasis: "",
-        outings: 0,
-        training: "",
-        trainingDog: "",
-    });
-
     // Listes data pour selectors
     const breeds = [
         "Berger Allemand",
@@ -56,7 +29,7 @@ const NewDogPage = () => {
         "Pinscher Allemand",
         "Spitz Allemand",
         "Yorkshire Terrier",
-        "Autre"
+        "Autre",
     ];
 
     const hIssues = [
@@ -69,10 +42,10 @@ const NewDogPage = () => {
         "Problèmes oculaires",
         "Allergies",
         "Infections urinaires",
-        "Troubles du comportement"
+        "Troubles du comportement",
     ];
 
-    const treatments = [
+    const treatmentsList = [
         "Médicaments",
         "Chirurgie",
         "Physiothérapie",
@@ -82,7 +55,7 @@ const NewDogPage = () => {
         "Médecine alternative",
         "Surveillance régulière",
         "Gestion de la douleur",
-        "Soins palliatifs"
+        "Soins palliatifs",
     ];
 
     const foods = [
@@ -93,37 +66,23 @@ const NewDogPage = () => {
         "Rations ménagères",
         "Reste alimentaires",
     ];
+    const [name, setName] = useState("");
+    const [photoUrl, setPhotoUrl] = useState("");
+    const [gender, setGender] = useState(null);
+    const [birthdate, setBirthdate] = useState("");
+    const [breed, setBreed] = useState("");
+    const [sterilized, setSterilized] = useState(null);
+    const [healthIssues, setHealthIssues] = useState([]);
+    const [otherHealthIssues, setOtherHealthIssues] = useState("");
+    const [treatments, setTreatments] = useState([]);
+    const [otherTreatments, setOtherTreatments] = useState("");
+    const [weight, setWeight] = useState("");
+    const [meals, setMeals] = useState(0);
+    const [feedBasis, setFeedBasis] = useState([]);
+    const [outings, setOutings] = useState(0);
+    const [training, setTraining] = useState(null);
+    const [trainingDogs, setTrainingDogs] = useState(null);
 
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-
-    // const handleAllergiesChange = (e) => {
-    //     const { value } = e.target;
-    //     setFormData((prevState) => ({
-    //         ...prevState,
-    //         allergies: [...prevState.allergies, value],
-    //     }));
-    // };
-
-    const displayData = (data) => {
-        console.log("données du formulaire : ", data); // Affiche une alerte "Bouton cliqué"
-    };
-
-    // const onSubmit = async (data) => {
-    //     try {
-    //         const response = await axios.post('/api/dogs', data);
-    //         console.log("Données soumises :", data); // Affiche les données du formulaire
-    //         console.log("Réponse du serveur :", response.data); // Affiche la réponse du serveur
-    //     } catch (error) {
-    //         console.error(error); // Gère les erreurs de requête
-    //     }
-    // };
 
     return (
         <div className="NewDogPage">
@@ -135,56 +94,48 @@ const NewDogPage = () => {
                 <label htmlFor="dogName">Nom :</label>
                 <input
                     name="dogName"
-                    value={formData.dogName}
-                    onChange={handleChange}
+                    value={name}
+                    placeholder="Nom du chien"
+                    onChange={(e) => setName(e.target.value)}
                 />
 
                 <label htmlFor="dogPicture">Photo du chien (url) :</label>
-                <input name="dogPicture" />
+                <input
+                    name="dogPicture"
+                    value={photoUrl}
+                    placeholder="Url vers la photo du chien"
+                    onChange={(e) => setPhotoUrl(e.target.setPhotoUrl)}
+                />
+
             </DogFormSection>
 
             {/* IDENTIFICATION */}
             <DogFormSection title={"Identification"}>
-                <label htmlFor="gender">Sexe :</label>
-                <div className="radio-container">
-                    <label htmlFor="male" className="radio-lab">
-                        <input
-                            id="male"
-                            type="radio"
-                            name="gender"
-                            value={false}
-                            onChange={handleChange}
-                        />
-                        Male
-                    </label>
-                    <label htmlFor="femelle" className="radio-lab">
-                        <input
-                            id="femelle"
-                            type="radio"
-                            name="gender"
-                            value={true}
-                            onChange={handleChange}
-                        />
-                        Femelle
-                    </label>
-                </div>
+                <RadioContainer
+                    text={["Male", "Femelle"]}
+                    value={gender}
+                    changeValue={(value) => setGender(value)}
+                />
 
                 <label htmlFor="date">Date de naissance :</label>
                 <input
                     type="date"
                     name="birthDate"
-                    value={formData.birthDate}
-                    onChange={handleChange}
+                    value={birthdate}
+                    onChange={() => {}}
                 />
 
                 <label htmlFor="breed">Race :</label>
                 <select
                     name="breed"
-                    value={formData.breed}
-                    onChange={handleChange}
-                    placeholder="Sélectionner la race du chien">
+                    value={breed}
+                    onChange={() => {}}
+                    placeholder="Sélectionner la race du chien"
+                >
                     {breeds.map((breed) => (
-                        <option key={breed} value={breed}>{breed}</option>
+                        <option key={breed} value={breed}>
+                            {breed}
+                        </option>
                     ))}
                     <option value="autre">Autre</option>
                 </select>
@@ -200,68 +151,64 @@ const NewDogPage = () => {
             {/* SANTE */}
             <DogFormSection title={"Santé"}>
                 <label htmlFor="ster">Stérilisation</label>
-                <div className="radio-container">
-                    <label htmlFor="nonster" className="radio-lab">
-                        <input
-                            id="nonster"
-                            type="radio"
-                            name="sterilized"
-                            value={false}
-                            onChange={handleChange}
-                        />
-                        Non-stérilisé
-                    </label>
-                    <label htmlFor="ster" className="radio-lab">
-                        <input
-                            id="ster"
-                            type="radio"
-                            name="sterilized"
-                            value={true}
-                            onChange={handleChange}
-                        />
-                        Stérilisé
-                    </label>
-                </div>
-                <label htmlFor="health">Problème de santé principal de votre chien</label>
-                <select
+                <RadioContainer
+                    text={["Non-stérilisé", "Stérilisé"]}
+                    value={sterilized}
+                    changeValue={(value) => setSterilized(value)}
+                />
+                <label htmlFor="health">
+                    Problème de santé principal de votre chien
+                </label>
+                {/* <select
                     name="healthIssues"
-                    value={formData.healthIssues}
-                    onChange={handleChange}
-                    placeholder="Sélectionner le problème de santé">
+                    value={healthIssues}
+                    onChange={() => {}}
+                    placeholder="Sélectionner le problème de santé"
+                >
                     {hIssues.map((issue) => (
-                        <option key={issue} value={issue}>{issue}</option>
+                        <option key={issue} value={issue}>
+                            {issue}
+                        </option>
                     ))}
                     <option value="autre">Autre</option>
-                </select>
+                </select> */}
+
+                <MultiSelect options={hIssues}/>
 
                 <label htmlFor="health2">Autre(s) problème(s) de santé</label>
                 <input
                     type="text"
                     name="otherHealthIssues"
                     placeholder="Autres(s) problème(s)"
-                    onChange={handleChange}
+                    value={otherHealthIssues}
+                    onChange={(e) => setOtherHealthIssues(e.target.setPhotoUrl)}
                 />
 
-                <label htmlFor="treatments">Traitements principal pris par votre chien</label>
-                <select
+                <label htmlFor="treatments">
+                    Traitements principal pris par votre chien
+                </label>
+                {/* <select
                     name="treatments"
-                    value={formData.treatments}
-                    onChange={handleChange}
-                    placeholder="Sélectionner le problème de santé">
-                    {treatments.map((treatment) => (
-                        <option key={treatment} value={treatment}>{treatment}</option>
+                    value={treatments}
+                    onChange={() => {}}
+                    placeholder="Sélectionner le problème de santé"
+                >
+                    {treatmentsList.map((treatment) => (
+                        <option key={treatment} value={treatment}>
+                            {treatment}
+                        </option>
                     ))}
                     <option value="autre">Autre</option>
-                </select>
-
+                </select> */}
+                <MultiSelect options={treatmentsList}/>
                 <label htmlFor="treatment2">Autre(s) traitements(s) pris</label>
                 <input
                     type="text"
                     name="otherTreatments"
                     placeholder="Autre(s) traitement(s)"
-                    onChange={handleChange}
+                    value={otherTreatments}
+                    onChange={(e) => setOtherTreatments(e.target.setPhotoUrl)}
                 />
-
             </DogFormSection>
 
             {/* ALIMENTATION */}
@@ -269,25 +216,23 @@ const NewDogPage = () => {
                 <label>Nombre de repas (quotidien)</label>
                 <ProductCounter />
 
-                <label htmlFor="feed">Sur quoi est basée l’alimentation de votre chien ? </label>
-                <select
+                <label htmlFor="feed">
+                    Sur quoi est basée l’alimentation de votre chien ?{" "}
+                </label>
+                {/* <select
                     name="feedBasis"
-                    value={formData.feedBasis}
-                    onChange={handleChange}
-                    placeholder="Sélectionner le problème de santé">
+                    value={feedBasis}
+                    onChange={() => {}}
+                    placeholder="Sélectionner le problème de santé"
+                >
                     {foods.map((food) => (
-                        <option key={food} value={food}>{food}</option>
+                        <option key={food} value={food}>
+                            {food}
+                        </option>
                     ))}
                     <option value="autre">Autre</option>
-                </select>
-
-                <label htmlFor="feed2">Autre(s) type(s) d'alimentation</label>
-                <input
-                    type="text"
-                    name="otherFeedBasis"
-                    placeholder="Autre(s) alimentation(s)"
-                    onChange={handleChange}
-                />
+                </select> */}
+                <MultiSelect options={foods}/>
             </DogFormSection>
 
             {/* ACTIVITE */}
@@ -299,66 +244,27 @@ const NewDogPage = () => {
             {/* EDUCATION */}
             <DogFormSection title={"Education"}>
                 <label>
-                    Avez-vous déjà participé à un ou plusieurs cours de dressage canin ?
-                    <div className="radio-container">
-                        <label htmlFor="educ" className="radio-lab">
-                            <input
-                                id="educ"
-                                type="radio"
-                                name="training"
-                                value={true}
-                                onChange={handleChange}
-                            />
-                            Oui
-                        </label>
-                        <label htmlFor="nonEduc" className="radio-lab">
-                            <input
-                                id="nonEduc"
-                                type="radio"
-                                name="training"
-                                value={false}
-                                onChange={handleChange}
-                            />
-                            Non
-                        </label>
-                    </div>
+                    Avez-vous déjà participé à un ou plusieurs cours de dressage
+                    canin ?
                 </label>
+                <RadioContainer
+                    text={["Oui", "Non"]}
+                    value={training}
+                    changeValue={(value) => setTraining(value)}
+                />
                 <label>
-                    Si oui, avez vous participé à ce ou ces cours avec {formData.name} ?                         
-                    <div className="radio-container">
-                        <label htmlFor="educDog" className="radio-lab">
-                            <input
-                                id="educDog"
-                                type="radio"
-                                name="trainingDog"
-                                value={true}
-                                onChange={handleChange}
-                            />
-                            Oui
-                        </label>
-                        <label htmlFor="NonEducDog" className="radio-lab">
-                            <input
-                                id="NonEducDog"
-                                type="radio"
-                                name="trainingDog"
-                                value={false}
-                                onChange={handleChange}
-                            />
-                            Non
-                        </label>
-                    </div>
+                    Si oui, avez vous participé à ce ou ces cours avec votre
+                    chien ?
                 </label>
-                {/* Ou utilisation du BooleanButton */}
-                {/* <BooleanButton /> */}
 
-
+                <RadioContainer
+                    text={["Oui", "Non"]}
+                    value={trainingDogs}
+                    changeValue={(value) => setTrainingDogs(value)}
+                />
             </DogFormSection>
 
-            <button
-                className="Button"
-                style={{ display: "inline-block" }}
-                onClick={displayData(formData)}
-            >
+            <button className="Button" onClick={() => {}}>
                 Ajouter le chien
             </button>
         </div>

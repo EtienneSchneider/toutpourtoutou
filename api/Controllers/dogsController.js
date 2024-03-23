@@ -43,9 +43,9 @@ export const sanitizeDogData = async (req, res, next) => {
     const healthRule = {
         sterilized: "boolean",
         healthIssues: "object",
-        otherHealthIssues: "object",
+        otherHealthIssues: "string",
         treatments: "object",
-        otherTreatments: "object",
+        otherTreatments: "string",
         // weight: "object"
     };
 
