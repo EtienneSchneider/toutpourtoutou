@@ -3,8 +3,7 @@ import "./Multiselect.scss";
 import { FiChevronDown } from "react-icons/fi";
 import classNames from "classnames";
 
-const MultiSelect = ({ options }) => {
-    const [selectedOptions, setSelectedOptions] = useState([]);
+const MultiSelect = ({ options, selectedOptions, updateSelectedOpts  }) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
 
@@ -30,11 +29,11 @@ const MultiSelect = ({ options }) => {
 
     const handleOptionClick = (option) => {
         if (selectedOptions.includes(option)) {
-            setSelectedOptions(
+            updateSelectedOpts(
                 selectedOptions.filter((item) => item !== option),
             );
         } else {
-            setSelectedOptions([...selectedOptions, option]);
+            updateSelectedOpts([...selectedOptions, option]);
         }
     };
 

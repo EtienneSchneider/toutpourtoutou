@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import userRoutes from "./Routes/userRoutes.js"
+import userRoutes from "./Routes/userRoutes.js";
 import dogRoutes from "./Routes/dogRoutes.js";
 import productRoutes from "./Routes/productRoutes.js";
 import orderRoutes from "./Routes/orderRoutes.js";
@@ -29,5 +29,5 @@ mongoose
         });
     })
     .catch((error) => {
-        console.log("problème de connexion", error);
+        console.log(error);
     });

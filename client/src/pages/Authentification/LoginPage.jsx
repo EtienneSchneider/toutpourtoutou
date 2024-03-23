@@ -4,7 +4,7 @@ import "./Login.scss";
 import BaseButton from "../../components/BaseButton/BaseButton";
 import BooleanButton from "../../components/BooleanButton/BooleanButton";
 import { useAppContext } from "../../contexts/AppContext";
-import { checkPasswordStrength } from "../../helpers/fonction";
+import { checkPasswordStrength } from "../../helpers/functions";
 
 const LoginPage = () => {
     const [login, setLogin] = useState(true);
@@ -38,7 +38,7 @@ const LoginPage = () => {
                     localStorage.setItem("accessToken", response.data.token);
                     setUserDetails(response.data.user);
                     setIsAuthentificated(true);
-                    
+
                     navigate("/dashboard");
                 })
                 .catch((error) => {

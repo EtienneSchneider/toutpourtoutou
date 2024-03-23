@@ -5,68 +5,14 @@ import DogFormSection from "../components/dog_components/DogFormSection";
 import ProductCounter from "../components/product_components/ProductCounter";
 import RadioContainer from "../components/RadioContainer/RadioContainer";
 import MultiSelect from "../components/Multiselect/Multiselect";
+import { breeds, hIssues, treatmentsList, foods } from "../assets/options";
+import { useAppContext } from "../contexts/AppContext.jsx";
+import { formatDate, getTodayDate } from "../helpers/functions.js";
+import { useNavigate } from "react-router-dom";
 
 const NewDogPage = () => {
-    // Listes data pour selectors
-    const breeds = [
-        "Berger Allemand",
-        "Berger Australien",
-        "Beagle",
-        "Berger Blanc Suisse",
-        "Berger Belge Malinois",
-        "Bouledogue Anglais",
-        "Bulldog Français",
-        "Cane Corso",
-        "Caniche",
-        "Cavalier King Charles",
-        "Chihuahua",
-        "Dalmatien",
-        "Épagneul Breton",
-        "Fox Terrier",
-        "Golden Retriever",
-        "Jack Russell Terrier",
-        "Labrador Retriever",
-        "Pinscher Allemand",
-        "Spitz Allemand",
-        "Yorkshire Terrier",
-        "Autre",
-    ];
-
-    const hIssues = [
-        "Dysplasie de la hanche",
-        "Maladies cardiaques",
-        "Problèmes de peau",
-        "Obésité",
-        "Diabète",
-        "Arthrose",
-        "Problèmes oculaires",
-        "Allergies",
-        "Infections urinaires",
-        "Troubles du comportement",
-    ];
-
-    const treatmentsList = [
-        "Médicaments",
-        "Chirurgie",
-        "Physiothérapie",
-        "Changement de régime alimentaire",
-        "Suppléments alimentaires",
-        "Thérapie comportementale",
-        "Médecine alternative",
-        "Surveillance régulière",
-        "Gestion de la douleur",
-        "Soins palliatifs",
-    ];
-
-    const foods = [
-        "Croquettes",
-        "Friandises",
-        "Nourriture humide",
-        "Os à mâcher",
-        "Rations ménagères",
-        "Reste alimentaires",
-    ];
     const [name, setName] = useState("");
+    const [chipNumber, setChipNumber] = useState("");
     const [photoUrl, setPhotoUrl] = useState("");
     const [gender, setGender] = useState(null);
     const [birthdate, setBirthdate] = useState("");
@@ -82,7 +28,70 @@ const NewDogPage = () => {
     const [outings, setOutings] = useState(0);
     const [training, setTraining] = useState(null);
     const [trainingDogs, setTrainingDogs] = useState(null);
+    const [error, setError] = useState("");
+    const { appApi, userDetails } = useAppContext();
+    const navigate = useNavigate();
+    
+    const handleCreateDog = async () => {
+        if (
+            chipNumber === "" ||
+            name === "" ||
+            gender === null ||
+            birthdate === "" ||
+            breed === "" ||
+            breed === "Choisir" ||
+            sterilized === null ||
+            weight === ""
+        ) {
+            setError(
+                'Veuilez renseigner toutes les informations portant la mention "*".',
+            );
+        } else {
+            const newDog = {
+                chipNumber,
+                owner: userDetails._id,
+                identification: {
+                    name,
+                    gender,
+                    birthdate: formatDate(birthdate),
+                    breed,
+                },
+                health: {
+                    sterilized,
+                    healthIssues,
+                    otherHealthIssues,
+                    treatments,
+                    otherTreatments,
+                    weight: [
+                        {
+                            weight: weight,
+                            date: getTodayDate(),
+                        },
+                    ],
+                },
+                feed: {
+                    meals,
+                    feedBasis,
+                },
+                activity: {
+                    outings,
+                },
+                education: {
+                    training,
+                    trainingDogs,
+                },
+            };
 
+            await appApi
+                .addDog(newDog)
+                .then((response) => {
+                    navigate("/dashboard");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
 
     return (
         <div className="NewDogPage">
@@ -90,8 +99,13 @@ const NewDogPage = () => {
                 <span className="material-symbols-outlined">arrow_back</span>
                 Retour
             </Link>
+
             <DogFormSection title={""}>
-                <label htmlFor="dogName">Nom :</label>
+                <span>
+                    Veuillez renseigner toutes les informations portant la
+                    mention "*".
+                </span>
+                <label htmlFor="dogName">Nom* :</label>
                 <input
                     name="dogName"
                     value={name}
@@ -104,12 +118,10 @@ const NewDogPage = () => {
                     name="dogPicture"
                     value={photoUrl}
                     placeholder="Url vers la photo du chien"
-                    onChange={(e) => setPhotoUrl(e.target.setPhotoUrl)}
+                    onChange={(e) => setPhotoUrl(e.target.value)}
                 />
-
             </DogFormSection>
 
-            {/* IDENTIFICATION */}
             <DogFormSection title={"Identification"}>
                 <RadioContainer
                     text={["Male", "Femelle"]}
@@ -117,19 +129,21 @@ const NewDogPage = () => {
                     changeValue={(value) => setGender(value)}
                 />
 
-                <label htmlFor="date">Date de naissance :</label>
+                <label htmlFor="date">Date de naissance* :</label>
                 <input
                     type="date"
                     name="birthDate"
                     value={birthdate}
-                    onChange={() => {}}
+                    onChange={(e) => setBirthdate(e.target.value)}
                 />
 
-                <label htmlFor="breed">Race :</label>
+                <label htmlFor="breed">Race* :</label>
                 <select
                     name="breed"
                     value={breed}
-                    onChange={() => {}}
+                    onChange={(e) => {
+                        setBreed(e.target.value);
+                    }}
                     placeholder="Sélectionner la race du chien"
                 >
                     {breeds.map((breed) => (
@@ -139,18 +153,25 @@ const NewDogPage = () => {
                     ))}
                     <option value="autre">Autre</option>
                 </select>
-
-                <label htmlFor="chip">N° puce :</label>
+                <label htmlFor="chip">N° puce* :</label>
                 <input
                     type="text"
                     name="chip"
                     placeholder="N° d’identification"
+                    onChange={(e) => setChipNumber(e.target.value)}
                 />
             </DogFormSection>
 
-            {/* SANTE */}
             <DogFormSection title={"Santé"}>
-                <label htmlFor="ster">Stérilisation</label>
+                <label htmlFor="weight">Poids du chien en kg* (ex: 12.5)</label>
+                <input
+                    type="text"
+                    name="weight"
+                    placeholder="Poids"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                />
+                <label htmlFor="ster">Stérilisation*</label>
                 <RadioContainer
                     text={["Non-stérilisé", "Stérilisé"]}
                     value={sterilized}
@@ -159,21 +180,14 @@ const NewDogPage = () => {
                 <label htmlFor="health">
                     Problème de santé principal de votre chien
                 </label>
-                {/* <select
-                    name="healthIssues"
-                    value={healthIssues}
-                    onChange={() => {}}
-                    placeholder="Sélectionner le problème de santé"
-                >
-                    {hIssues.map((issue) => (
-                        <option key={issue} value={issue}>
-                            {issue}
-                        </option>
-                    ))}
-                    <option value="autre">Autre</option>
-                </select> */}
 
-                <MultiSelect options={hIssues}/>
+                <MultiSelect
+                    options={hIssues}
+                    selectedOptions={healthIssues}
+                    updateSelectedOpts={(optionsSelected) => {
+                        setHealthIssues(optionsSelected);
+                    }}
+                />
 
                 <label htmlFor="health2">Autre(s) problème(s) de santé</label>
                 <input
@@ -181,67 +195,57 @@ const NewDogPage = () => {
                     name="otherHealthIssues"
                     placeholder="Autres(s) problème(s)"
                     value={otherHealthIssues}
-                    onChange={(e) => setOtherHealthIssues(e.target.setPhotoUrl)}
+                    onChange={(e) => setOtherHealthIssues(e.target.value)}
                 />
 
                 <label htmlFor="treatments">
                     Traitements principal pris par votre chien
                 </label>
-                {/* <select
-                    name="treatments"
-                    value={treatments}
-                    onChange={() => {}}
-                    placeholder="Sélectionner le problème de santé"
-                >
-                    {treatmentsList.map((treatment) => (
-                        <option key={treatment} value={treatment}>
-                            {treatment}
-                        </option>
-                    ))}
-                    <option value="autre">Autre</option>
-                </select> */}
-                <MultiSelect options={treatmentsList}/>
+                <MultiSelect
+                    options={treatmentsList}
+                    selectedOptions={treatments}
+                    updateSelectedOpts={(optionsSelected) => {
+                        setTreatments(optionsSelected);
+                    }}
+                />
+
                 <label htmlFor="treatment2">Autre(s) traitements(s) pris</label>
                 <input
                     type="text"
                     name="otherTreatments"
                     placeholder="Autre(s) traitement(s)"
                     value={otherTreatments}
-                    onChange={(e) => setOtherTreatments(e.target.setPhotoUrl)}
+                    onChange={(e) => setOtherTreatments(e.target.value)}
                 />
             </DogFormSection>
 
-            {/* ALIMENTATION */}
             <DogFormSection title={"Alimentation"}>
                 <label>Nombre de repas (quotidien)</label>
-                <ProductCounter />
+                <ProductCounter
+                    value={meals}
+                    updateCounter={(count) => setMeals(count)}
+                />
 
                 <label htmlFor="feed">
                     Sur quoi est basée l’alimentation de votre chien ?{" "}
                 </label>
-                {/* <select
-                    name="feedBasis"
-                    value={feedBasis}
-                    onChange={() => {}}
-                    placeholder="Sélectionner le problème de santé"
-                >
-                    {foods.map((food) => (
-                        <option key={food} value={food}>
-                            {food}
-                        </option>
-                    ))}
-                    <option value="autre">Autre</option>
-                </select> */}
-                <MultiSelect options={foods}/>
+                <MultiSelect
+                    options={foods}
+                    selectedOptions={feedBasis}
+                    updateSelectedOpts={(optionsSelected) => {
+                        setFeedBasis(optionsSelected);
+                    }}
+                />
             </DogFormSection>
 
-            {/* ACTIVITE */}
             <DogFormSection title={"Activité"}>
                 <label>Nombre de sorties (quotidienne)</label>
-                <ProductCounter />
+                <ProductCounter
+                    value={outings}
+                    updateCounter={(count) => setOutings(count)}
+                />
             </DogFormSection>
 
-            {/* EDUCATION */}
             <DogFormSection title={"Education"}>
                 <label>
                     Avez-vous déjà participé à un ou plusieurs cours de dressage
@@ -264,7 +268,9 @@ const NewDogPage = () => {
                 />
             </DogFormSection>
 
-            <button className="Button" onClick={() => {}}>
+            <span className="error">{error}</span>
+
+            <button className="Button" onClick={handleCreateDog}>
                 Ajouter le chien
             </button>
         </div>

@@ -13,14 +13,17 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Content() {
-    const { appApi, isAuthentificated, setIsAuthentificated } = useAppContext();
+    const { appApi, isAuthentificated, setIsAuthentificated, setUserDetails } =
+        useAppContext();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (localStorage.getItem("accessToken")) {
             appApi
                 .getAuthStatus()
-                .then((response) => {})
+                .then((response) => {
+                    setUserDetails(response.data);
+                })
                 .catch((error) => {
                     setIsAuthentificated(false);
                     localStorage.removeItem("accessToken");
