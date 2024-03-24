@@ -7,6 +7,20 @@
     padding: 16px;
     border-radius: 16px;
 
+    position: relative;
+
+    .product-count {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+    }
+
     .img-container {
         background-color: var(--white);
         height: 128px;
@@ -23,5 +37,50 @@
 
     .text-container {
         padding-right: 8px;
+    }
+}
+
+.ProductPreviewWithPrices {
+    width: 256px;
+    height: 356px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 16px;
+    position: relative;
+
+    .product-count {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 16px;
+    }
+
+    .img-container {
+        background-color: var(--white);
+        height: 200px;
+        min-width: 256px;
+        border-radius: 16px 16px 0 0;
+        overflow: hidden;
+
+        img {
+            width: 256px;
+            height: 200px;
+            object-fit: cover;
+        }
+    }
+
+    .text-container {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        overflow-y: hidden;
     }
 }

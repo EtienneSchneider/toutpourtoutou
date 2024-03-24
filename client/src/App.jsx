@@ -42,10 +42,22 @@ function Content() {
         <div className="main-container">
             <Routes>
                 <Route path="/dashboard" exact element={<DashBoardRoot />}>
-                    <Route path="/dashboard/:dogId" element={<DashBoard />} />
+                    <Route
+                        path="/dashboard/:dogId"
+                        exact
+                        element={<DashBoard />}
+                    />
                 </Route>
-                <Route path="/dog-profile/:dogId" element={<DashboardProfile />} />
                 <Route path="/products" exact element={<Products />} />
+                <Route
+                    path="/products/:productId"
+                    exact
+                    element={<SingleProductPage />}
+                />
+                <Route
+                    path="/dog-profile/:dogId"
+                    element={<DashboardProfile />}
+                />
                 <Route path="/new-dog" exact element={<NewDogPage />} />
                 <Route path="/comptest" exact element={<ComponentTest />} />
                 <Route path="/login" exact element={<LoginPage />} />

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
 import { getAgeOfDog, stringToAge } from "../../helpers/functions";
 import Button from "../../components/clickables/Button";
-import ProductPreview from "../../components/dashboard_components/ProductPreview";
+import LastOrderList from "../../components/dashboard_components/LastOrder";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
 import WeightChart from "../../components/WeightChart/WeightChart";
 
@@ -141,26 +141,11 @@ const DashBoard = () => {
                         <p className="col-gray">Aucune commande prévue</p>
                     )}
                 </div>
-                <div className="delivery-list">
-                    {products ? (
-                        products.map((prod) => {
-                            return (
-                                <ProductPreview
-                                    key={prod.serialNumber}
-                                    title={prod.brand}
-                                    desc={prod.description}
-                                    img_url={
-                                        prod.image
-                                            ? prod.image
-                                            : "https://cashmailsystemaveceva.websites.co.in/dummytemplate/img/product-placeholder.png"
-                                    }
-                                />
-                            );
-                        })
-                    ) : (
-                        <></>
-                    )}
-                </div>
+                <LastOrderList
+                    products={products}
+                    orderList={order}
+                    withPrices={false}
+                />
             </div>
             <div className="articles">
                 <h2 className="subheadertext">

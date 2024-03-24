@@ -67,13 +67,44 @@ export function getTodayDate() {
     let year = today.getFullYear();
 
     if (day < 10) {
-        day = '0' + day;
+        day = "0" + day;
     }
     if (month < 10) {
-        month = '0' + month;
+        month = "0" + month;
     }
 
-    return day + '/' + month + '/' + year;
+    return day + "/" + month + "/" + year;
+}
+
+export function getUniquePropertyValues(arr, propName) {
+    const uniqueValues = new Set();
+    arr.forEach((obj) => {
+        uniqueValues.add(obj[propName]);
+    });
+    return Array.from(uniqueValues);
+}
+
+const parsePrice = (priceString) => {
+    return parseFloat(priceString.replace("€", "").trim());
+};
+
+export function sortData(data, sortValue) {
+    switch (sortValue) {
+        case "a-z":
+            return [...data].sort((a, b) => a.brand.localeCompare(b.brand));
+        case "z-a":
+            return [...data].sort((a, b) => b.brand.localeCompare(a.brand));
+        case "asc":
+            return [...data].sort(
+                (a, b) => parsePrice(a.price) - parsePrice(b.price),
+            );
+        case "desc":
+            return [...data].sort(
+                (a, b) => parsePrice(b.price) - parsePrice(a.price),
+            );
+        default:
+            return data;
+    }
 }
 
 export const stringToAge = (birthDate) => {

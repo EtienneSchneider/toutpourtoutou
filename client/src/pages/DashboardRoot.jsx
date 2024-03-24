@@ -4,12 +4,12 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext.jsx";
 
 const DashBoardRoot = () => {
-    const { appApi } = useContext(AppContext);
+    const { appApi, userDetails } = useContext(AppContext);
+
     const selectedDogId = useParams().dogId;
     const [dogList, setDogList] = useState(null);
     const [order, setOrder] = useState(null);
     const [products, setProducts] = useState([]);
-    const { userDetails } = useAppContext();
     const navigate = useNavigate();
 
     useEffect(() => {
