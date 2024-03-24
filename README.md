@@ -35,6 +35,8 @@ Toutpourtoutou est un projet développé pour vous aider à prendre soin de votr
 
 - [Schneider Etienne]
 - [Stallknecht Lucas]
+- [Addi Yannis]
+- [Crapanzano Julia]
 
 
 ---
