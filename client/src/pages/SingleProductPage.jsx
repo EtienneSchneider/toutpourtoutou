@@ -6,7 +6,10 @@ import { Link, useParams } from "react-router-dom";
 
 const SingleProductPage = () => {
     const productId = useParams().productId;
-    const order = useRef({ id: null, defaultQuantity: 0 });
+    const [order, setOrder] = useState({
+        orderNumber: null,
+        defaultQuantity: 0,
+    });
     const [productData, setProductData] = useState(null);
     const [counter, setCounter] = useState(0);
 
@@ -40,14 +43,22 @@ const SingleProductPage = () => {
                             (a, b) =>
                                 new Date(b.orderDate) - new Date(a.orderDate),
                         )[0];
-                        order.current.id = latestOrder._id;
+                        setOrder((prev) => ({
+                            ...prev,
+                            orderNumber: latestOrder.orderNumber,
+                        }));
                         const loProductMatch = latestOrder.orderedProducts.find(
                             (pr) => pr.serialNumber == productId,
                         );
-                        order.current.defaultQuantity = loProductMatch
-                            ? loProductMatch.quantity
-                            : 0;
-                        setCounter(order.current.defaultQuantity);
+                        setOrder({
+                            orderNumber: latestOrder.orderNumber,
+                            defaultQuantity: loProductMatch
+                                ? loProductMatch.quantity
+                                : 0,
+                        });
+                        setCounter(
+                            loProductMatch ? loProductMatch.quantity : 0,
+                        );
                     }
                 })
                 .catch((error) => {
@@ -55,6 +66,26 @@ const SingleProductPage = () => {
                 });
         }
     }, [userDetails]);
+
+    const updateQuantity = () => {
+        if (localStorage.getItem("accessToken") && order.orderNumber) {
+            appApi
+                .modifyOrder({
+                    orderNumber: order.orderNumber,
+                    productSN: productId,
+                    newQuantity: counter,
+                })
+                .then((response) => {
+                    setOrder({
+                        ...order,
+                        defaultQuantity: counter,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
 
     return productData ? (
         <div className="SingleProductPage">
@@ -93,9 +124,12 @@ const SingleProductPage = () => {
                                 value={counter}
                                 updateCounter={(count) => setCounter(count)}
                             />
-                            {counter != order.current.defaultQuantity ? (
-                                <button className="green-check">
-                                    <span class="material-symbols-outlined">
+                            {counter != order.defaultQuantity ? (
+                                <button
+                                    className="green-check"
+                                    onClick={updateQuantity}
+                                >
+                                    <span className="material-symbols-outlined">
                                         check_circle
                                     </span>
                                 </button>
