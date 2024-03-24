@@ -1,10 +1,11 @@
 import "./RadioContainer.scss";
 import classNames from "classnames";
 
-const RadioContainer = ({ text, changeValue, value }) => {
+const RadioContainer = ({ text, changeValue, value, disabled }) => {
     return (
         <div className="radioContainer">
             <button
+                disabled={disabled}
                 className={classNames("radioButton", {
                     selected: value === true,
                 })}
@@ -13,6 +14,7 @@ const RadioContainer = ({ text, changeValue, value }) => {
                 {text[0]}
             </button>
             <button
+                disabled={disabled}
                 className={classNames("radioButton", {
                     selected: value === false,
                 })}

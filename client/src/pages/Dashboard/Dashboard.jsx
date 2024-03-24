@@ -1,14 +1,16 @@
 import "./Dashboard.scss";
 import { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { getAgeOfDog } from "../../helpers/functions";
+import { getAgeOfDog, stringToAge } from "../../helpers/functions";
 import Button from "../../components/clickables/Button";
 import ProductPreview from "../../components/dashboard_components/ProductPreview";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
+import WeightChart from "../../components/WeightChart/WeightChart";
 
 const DashBoard = () => {
     const { dogList, selectedDogId, order, products } = useOutletContext();
     const [selectedDogData, setSelectedDogData] = useState(null);
+    console.log(selectedDogData);
 
     const [isLoaded, setLoaded] = useState(false);
 
@@ -60,10 +62,10 @@ const DashBoard = () => {
                                 : "Femelle"}
                         </li>
                         <li>
-                            {selectedDogData.health.healthIssues.length == 0
+                            {selectedDogData.health.healthIssues.length === 0
                                 ? "Bonne santé"
-                                : selectedDogData.health.healthIssues.map(
-                                      (healthProb) => healthProb,
+                                : selectedDogData.health.healthIssues.join(
+                                      ", ",
                                   )}
                         </li>
                     </ul>
@@ -78,6 +80,54 @@ const DashBoard = () => {
             </div>
             <div className="recap">
                 <h2 className="subheadertext">Récapitulatif</h2>
+                <div className="chart">
+                    <WeightChart data={selectedDogData} />
+                </div>
+                <div className="followup">
+                    <h2>Suivi du chien</h2>
+                    {selectedDogData &&
+                    stringToAge(selectedDogData.identification.birthDate) >
+                        12 ? (
+                        <>
+                            <div className="food info">
+                                {" "}
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
+                                Votre chien à besoin d'envrion 30 grammes de
+                                nourriture par kilogramme de poids corporel
+                                divisé en 1 ou 2 repas par jours.
+                            </div>
+                            <div className="vaccine info">
+                                {" "}
+                                <span class="material-symbols-outlined">
+                                    warning
+                                </span>
+                                Aucun vaccin a prévoir.
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="food">
+                                {" "}
+                                <span class="material-symbols-outlined">
+                                    info
+                                </span>
+                                Votre chien à besoin d'envrion 65 grammes de
+                                nourriture par kilogramme de poids corporel
+                                divisé en 3 ou 4 repas par jours.
+                            </div>
+                            <div className="vaccine">
+                                {" "}
+                                <span class="material-symbols-outlined">
+                                    warning
+                                </span>
+                                Le prochain vaccin contre la maladie de Carré
+                                devrait idéalement avoir lieu dans 3 semaines.
+                            </div>
+                        </>
+                    )}
+                </div>
             </div>
             <div className="delivery">
                 <div className="delivery-desc">

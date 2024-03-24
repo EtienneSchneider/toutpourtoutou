@@ -10,6 +10,6 @@ const router = express.Router();
 
 router.post("/addDog", sanitizeDogData, addDog);
 router.post("/userDogs", getUserDogs);
-router.post("/updateDog", updateDog);
+router.put("/updateDog", updateDog);
 
 export default router;

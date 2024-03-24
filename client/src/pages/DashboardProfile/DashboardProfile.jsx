@@ -1,20 +1,24 @@
 import "./DashboardProfile.scss";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import DogFormSection from "../../components/dog_components/DogFormSection.jsx";
 import ProductCounter from "../../components/product_components/ProductCounter.jsx";
 import RadioContainer from "../../components/RadioContainer/RadioContainer.jsx";
 import MultiSelect from "../../components/Multiselect/Multiselect.jsx";
-import { breeds, hIssues, treatmentsList, foods } from "../../assets/options.js";
+import {
+    breeds,
+    hIssues,
+    treatmentsList,
+    foods,
+} from "../../assets/options.js";
 import { useAppContext } from "../../contexts/AppContext.jsx";
 import { formatDate, getTodayDate } from "../../helpers/functions.js";
-import { useNavigate } from "react-router-dom";
 
 const DashboardProfile = () => {
     const [selectedDogData, setSelectedDogData] = useState(null);
     const selectedDogId = useParams().dogId;
-
+    const navigate = useNavigate();
     const [name, setName] = useState("");
     const [chipNumber, setChipNumber] = useState("");
     const [photoUrl, setPhotoUrl] = useState("");
@@ -35,13 +39,83 @@ const DashboardProfile = () => {
     const [error, setError] = useState("");
     const { appApi, userDetails } = useAppContext();
 
-    const [isLoaded,  ] = useState(false);
+    const [isLoaded] = useState(false);
 
     useEffect(() => {
+        if (selectedDogData !== null) {
+            setBirthdate(selectedDogData.identification.birthDate);
+            setName(selectedDogData.identification.name);
+            setChipNumber(selectedDogData.chipNumber);
+            setPhotoUrl(selectedDogData.identification.picture);
+            setGender(selectedDogData.identification.gender);
+            setBirthdate(selectedDogData.identification.birthDate);
+            setBreed(selectedDogData.identification.breed);
+            setSterilized(selectedDogData.health.sterilized);
+            setHealthIssues(selectedDogData.health.healthIssues);
+            setOtherHealthIssues(selectedDogData.health.otherHealthIssues);
+            setTreatments(selectedDogData.health.treatments);
+            setOtherTreatments(selectedDogData.health.otherTreatments);
+            setMeals(selectedDogData.feed.meals);
+            setFeedBasis(selectedDogData.feed.feedBasis);
+            setOutings(selectedDogData.activity.outings);
+            setTraining(selectedDogData.education.training);
+            setTrainingDogs(selectedDogData.education.trainingDogs);
 
+            const weight = selectedDogData.health.weight;
+            setWeight(weight[weight.length - 1].weight);
+        }
+    }, [selectedDogData]);
 
-        console.log(selectedDogId);
-    }, [selectedDogId]);
+    const handleUpdateDog = async () => {
+        const currentWeight = selectedDogData.health.weight;
+
+        if (currentWeight[currentWeight.length - 1].weight !== weight) {
+            const newWeight = {
+                weight: weight,
+                date: getTodayDate(),
+            };
+            currentWeight.push(newWeight);
+        }
+
+        const updatedDog = {
+            chipNumber,
+            owner: userDetails._id,
+            identification: {
+                name,
+                gender,
+                birthDate: birthdate,
+                breed,
+            },
+            health: {
+                sterilized,
+                healthIssues,
+                otherHealthIssues,
+                treatments,
+                otherTreatments,
+                weight: currentWeight,
+            },
+            feed: {
+                meals,
+                feedBasis,
+            },
+            activity: {
+                outings,
+            },
+            education: {
+                training,
+                trainingDogs,
+            },
+        };
+
+        await appApi
+            .updateDog(updatedDog)
+            .then((response) => {
+                navigate("/dashboard");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     useEffect(() => {
         if (localStorage.getItem("accessToken") && userDetails) {
@@ -50,14 +124,12 @@ const DashboardProfile = () => {
                     owner: userDetails._id,
                 })
                 .then((response) => {
-                    setDogList(response.data);
-                    if (response.data.length > 0) {
-                        if (selectedDogId) response.data[0].selectedDogId;
-                        else {
-                            navigate("/dashboard/" + response.data[0]._id);
+                    const userDogs = response.data;
+                    for (const dog of userDogs) {
+                        if (dog._id === selectedDogId) {
+                            setSelectedDogData(dog);
+                            break;
                         }
-                    } else {
-                        navigate("/new-dog/");
                     }
                 })
                 .catch((error) => {
@@ -97,6 +169,7 @@ const DashboardProfile = () => {
 
             <DogFormSection title={"Identification"}>
                 <RadioContainer
+                    disabled={true}
                     text={["Male", "Femelle"]}
                     value={gender}
                     changeValue={(value) => setGender(value)}
@@ -104,35 +177,21 @@ const DashboardProfile = () => {
 
                 <label htmlFor="date">Date de naissance* :</label>
                 <input
-                    type="date"
+                    type="text"
+                    readOnly
                     name="birthDate"
                     value={birthdate}
-                    onChange={(e) => setBirthdate(e.target.value)}
                 />
 
                 <label htmlFor="breed">Race* :</label>
-                <select
-                    name="breed"
-                    value={breed}
-                    onChange={(e) => {
-                        setBreed(e.target.value);
-                    }}
-                    placeholder="Sélectionner la race du chien"
-                >
-                    {breeds.map((breed) => (
-                        <option key={breed} value={breed}>
-                            {breed}
-                        </option>
-                    ))}
-                    <option value="autre">Autre</option>
-                </select>
+                <input type="text" readOnly name="birthDate" value={breed} />
                 <label htmlFor="chip">N° puce* :</label>
                 <input
                     type="text"
                     name="chip"
                     value={chipNumber}
                     placeholder="N° d’identification"
-                    onChange={(e) => setChipNumber(e.target.value)}
+                    readOnly
                 />
             </DogFormSection>
 
@@ -244,8 +303,8 @@ const DashboardProfile = () => {
 
             <span className="error">{error}</span>
 
-            <button className="Button" onClick={handleCreateDog}>
-                Ajouter le chien
+            <button className="Button" onClick={handleUpdateDog}>
+                Enregistrer
             </button>
         </div>
     ) : (

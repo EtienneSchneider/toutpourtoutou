@@ -30,25 +30,27 @@ export const getUserDogs = async (req, res) => {
 };
 
 export const updateDog = async (req, res) => {
-    const { chipNumber, updatedData } = req.body;
+    const { chipNumber } = req.body; // Obtenez le numéro de puce du chien à mettre à jour
+    const updatedDogData = req.body; // Obtenez les nouvelles données du chien depuis le corps de la requête
 
     try {
-        const dog = await Dog.findOne({ chipNumber: chipNumber });
+        // Recherchez le chien par son numéro de puce
+        const dog = await Dog.findOne({ chipNumber });
+
         if (!dog) {
-            return res.status(401).send("Dog not found");
+            return res.status(404).json({ message: 'Chien non trouvé' });
         }
 
-        // Mettre à jour les attributs spécifiés dans updatedData
-        for (const [key, value] of Object.entries(updatedData)) {
-            if (dog[key] !== undefined) {
-                dog[key] = value;
-            }
-        }
+        // Mettez à jour les données du chien avec les nouvelles données
+        dog.set(updatedDogData);
 
-        const updatedDog = await dog.save();
-        res.status(200).json(updatedDog);
+        // Sauvegardez les modifications dans la base de données
+        await dog.save();
+
+        return res.status(200).json({ message: 'Chien mis à jour avec succès', updatedDog: dog });
     } catch (error) {
-        res.status(500).send({ message: error.message });
+        console.error('Erreur lors de la mise à jour du chien :', error);
+        return res.status(500).json({ message: 'Erreur lors de la mise à jour du chien' });
     }
 };
 

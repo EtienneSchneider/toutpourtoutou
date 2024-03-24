@@ -44,6 +44,27 @@
 
     .recap {
         grid-area: recap;
+        display: flex;
+        flex-direction: column;
+        .followup {
+            h2 {
+                margin-top: 16px;
+                margin-bottom: 16px;
+            }
+            .info {
+                font-size: 0.8rem;
+                display: flex;
+                gap: 8px;
+
+                &.food {
+                    margin-bottom: 8px;
+                }
+                span {
+                    font-size: 1.2rem;
+                    color: var(--accent);
+                }
+            }
+        }
     }
 
     .delivery {

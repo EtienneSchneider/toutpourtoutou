@@ -32,6 +32,7 @@ export const AppApi = () => {
         createAccount: (data) => request("POST", "/createAccount", data),
         addDog: (data) => request("POST", "/addDog", data),
         getUserDogs: (data) => request("POST", "/userDogs", data),
+        updateDog: (data) => request("PUT", "/updateDog", data),
         createOrder: (data) => request("POST", "/createOrder", data),
         getUserOrders: (data) => request("POST", "/userOrders", data),
         addProduct: (data) => request("POST", "/addProduct", data),

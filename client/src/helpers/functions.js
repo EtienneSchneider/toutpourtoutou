@@ -75,3 +75,19 @@ export function getTodayDate() {
 
     return day + '/' + month + '/' + year;
 }
+
+export const stringToAge = (birthDate) => {
+    var parts = birthDate.split("/");
+    var day = parseInt(parts[0]);
+    var month = parseInt(parts[1]) - 1; // Mois commence à 0 dans JavaScript
+    var year = parseInt(parts[2]);
+
+    var dateNaissanceObj = new Date(year, month, day);
+    var todayDate = new Date();
+    var diff = todayDate - dateNaissanceObj;
+
+    // Conversion de la différence en millisecondes en mois
+    var ageInMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44));
+
+    return ageInMonths;
+};
