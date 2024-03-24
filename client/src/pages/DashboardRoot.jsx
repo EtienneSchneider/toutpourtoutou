@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import { useAppContext } from "../contexts/AppContext.jsx";
 
 const DashBoardRoot = () => {
     const { appApi, userDetails } = useContext(AppContext);

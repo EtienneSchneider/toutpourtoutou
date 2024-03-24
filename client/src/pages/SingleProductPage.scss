@@ -1,43 +1,61 @@
 .SingleProductPage {
-    .backButton {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        position: relative;
-        top: 32px;
-        left: 60px;
-        svg {
-            width: 32px;
-            height: 32px;
-        }
-    }
-    .fiche {
-        background-color: white;
-        height: 44rem;
-        width: 111rem;
-        border-radius: 1.5rem;
-        margin-top: 65px;
-        margin-left: 4rem;
+    padding: 64px;
+    display: flex;
+    justify-content: center;
 
-        .product-infos {
+    .product-card {
+        border-radius: 16px;
+        padding: 64px;
+        display: flex;
+        gap: 32px;
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--gray);
+        }
+
+        .product-card-left {
+            width: 500px;
             display: flex;
             flex-direction: column;
-            margin-left: 55rem;
-            width: 509px;
-            height: 692px;
-            padding-top: 58px;
+            align-items: stretch;
+            gap: 32px;
 
-            > .subheadertext {
-                margin-bottom: 32px; /* Ajoute un espace de 32px en dessous de chaque élément */
+            img {
+                max-width: 500px;
+                max-height: 500px;
+                object-fit: contain;
             }
         }
 
-        .product-img {
-            float: left;
-            width: 597px;
-            height: 576px;
-            margin-left: 2rem;
-            margin: 60px;
+        .product-card-right {
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 128px;
+
+            .product-card-right-title {
+                p {
+                    margin-top: 32px;
+                }
+            }
+
+            .counter-and-check {
+                display: flex;
+                align-items: center;
+
+                button {
+                    color: var(--white);
+                }
+
+                .green-check {
+                    color: green;
+                    line-height: 0;
+                }
+            }
         }
     }
 }
