@@ -1,8 +1,18 @@
 import "./NavBar.scss";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useAppContext } from "../../contexts/AppContext.jsx";
 
 const NavBar = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    const { setIsAuthentificated, isAuthentificated } = useAppContext();
+
+    const handleLogout = () => {
+        localStorage.removeItem("accessToken");
+        navigate("/login");
+        setIsAuthentificated(false);
+    };
+
     return (
         <nav className="bg-white">
             <img src="/toutpourtoutou.svg" alt="logo" />
@@ -54,6 +64,12 @@ const NavBar = () => {
                     </NavLink>
                 </li>
             </ul>
+            {isAuthentificated && (
+                <button className="logout" onClick={handleLogout}>
+                    Déconnexion
+                    <span class="material-symbols-outlined">logout</span>
+                </button>
+            )}
         </nav>
     );
 };
