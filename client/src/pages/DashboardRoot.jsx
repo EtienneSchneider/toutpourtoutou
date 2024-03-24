@@ -53,6 +53,7 @@ const DashBoardRoot = () => {
     }, [userDetails]);
 
     useEffect(() => {
+        setProducts([]);
         if (order && order.orderedProducts.length > 0) {
             for (let prod of order.orderedProducts) {
                 appApi
