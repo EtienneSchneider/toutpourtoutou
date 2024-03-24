@@ -55,6 +55,7 @@ const NewDogPage = () => {
                     gender,
                     birthDate: formatDate(birthdate),
                     breed,
+                    picture: photoUrl
                 },
                 health: {
                     sterilized,

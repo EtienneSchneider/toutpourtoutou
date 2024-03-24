@@ -89,7 +89,7 @@ const DashBoard = () => {
                     stringToAge(selectedDogData.identification.birthDate) >
                         12 ? (
                         <>
-                            <div className="food info">
+                            <div className="food">
                                 {" "}
                                 <span class="material-symbols-outlined">
                                     info
@@ -98,13 +98,24 @@ const DashBoard = () => {
                                 nourriture par kilogramme de poids corporel
                                 divisé en 1 ou 2 repas par jours.
                             </div>
-                            <div className="vaccine info">
+                            <div className="vaccine">
                                 {" "}
                                 <span class="material-symbols-outlined">
                                     warning
                                 </span>
                                 Aucun vaccin a prévoir.
                             </div>
+
+                            {selectedDogData &&
+                                selectedDogData.activity.outings < 3 && (
+                                    <div className="outing">
+                                        {" "}
+                                        <span class="material-symbols-outlined">
+                                            warning
+                                        </span>
+                                        Vous devriez sortir plus souvent votre chien, au minimum 3 fois par jours.
+                                    </div>
+                                )}
                         </>
                     ) : (
                         <>
@@ -125,6 +136,17 @@ const DashBoard = () => {
                                 Le prochain vaccin contre la maladie de Carré
                                 devrait idéalement avoir lieu dans 3 semaines.
                             </div>
+
+                            {selectedDogData &&
+                                selectedDogData.activity.outings < 3 && (
+                                    <div className="outing">
+                                        {" "}
+                                        <span class="material-symbols-outlined">
+                                            warning
+                                        </span>
+                                        Vous devriez sortir plus souvent votre chien, au minimum 3 fois par jours.
+                                    </div>
+                                )}
                         </>
                     )}
                 </div>

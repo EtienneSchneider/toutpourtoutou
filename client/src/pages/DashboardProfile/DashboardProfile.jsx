@@ -85,6 +85,7 @@ const DashboardProfile = () => {
                 gender,
                 birthDate: birthdate,
                 breed,
+                picture: photoUrl
             },
             health: {
                 sterilized,
