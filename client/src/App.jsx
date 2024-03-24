@@ -23,6 +23,7 @@ function Content() {
             try {
                 if (localStorage.getItem("accessToken")) {
                     const response = await appApi.getAuthStatus();
+                    setIsAuthentificated(true);
                     setUserDetails(response.data);
                 } else {
                     setIsAuthentificated(false);
