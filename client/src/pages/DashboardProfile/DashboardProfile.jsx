@@ -1,5 +1,6 @@
-import "./NewDogPage.scss";
-import React, { useState } from "react";
+import "./DashboardProfile.scss";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import DogFormSection from "../../components/dog_components/DogFormSection.jsx";
 import ProductCounter from "../../components/product_components/ProductCounter.jsx";
@@ -10,7 +11,10 @@ import { useAppContext } from "../../contexts/AppContext.jsx";
 import { formatDate, getTodayDate } from "../../helpers/functions.js";
 import { useNavigate } from "react-router-dom";
 
-const NewDogPage = () => {
+const DashboardProfile = () => {
+    const [selectedDogData, setSelectedDogData] = useState(null);
+    const selectedDogId = useParams().dogId;
+
     const [name, setName] = useState("");
     const [chipNumber, setChipNumber] = useState("");
     const [photoUrl, setPhotoUrl] = useState("");
@@ -30,70 +34,39 @@ const NewDogPage = () => {
     const [trainingDogs, setTrainingDogs] = useState(null);
     const [error, setError] = useState("");
     const { appApi, userDetails } = useAppContext();
-    const navigate = useNavigate();
-    
-    const handleCreateDog = async () => {
-        if (
-            chipNumber === "" ||
-            name === "" ||
-            gender === null ||
-            birthdate === "" ||
-            breed === "" ||
-            breed === "Choisir" ||
-            sterilized === null ||
-            weight === ""
-        ) {
-            setError(
-                'Veuilez renseigner toutes les informations portant la mention "*".',
-            );
-        } else {
-            const newDog = {
-                chipNumber,
-                owner: userDetails._id,
-                identification: {
-                    name,
-                    gender,
-                    birthDate: formatDate(birthdate),
-                    breed,
-                },
-                health: {
-                    sterilized,
-                    healthIssues,
-                    otherHealthIssues,
-                    treatments,
-                    otherTreatments,
-                    weight: [
-                        {
-                            weight: weight,
-                            date: getTodayDate(),
-                        },
-                    ],
-                },
-                feed: {
-                    meals,
-                    feedBasis,
-                },
-                activity: {
-                    outings,
-                },
-                education: {
-                    training,
-                    trainingDogs,
-                },
-            };
 
-            await appApi
-                .addDog(newDog)
+    const [isLoaded,  ] = useState(false);
+
+    useEffect(() => {
+
+
+        console.log(selectedDogId);
+    }, [selectedDogId]);
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken") && userDetails) {
+            appApi
+                .getUserDogs({
+                    owner: userDetails._id,
+                })
                 .then((response) => {
-                    navigate("/dashboard");
+                    setDogList(response.data);
+                    if (response.data.length > 0) {
+                        if (selectedDogId) response.data[0].selectedDogId;
+                        else {
+                            navigate("/dashboard/" + response.data[0]._id);
+                        }
+                    } else {
+                        navigate("/new-dog/");
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
                 });
         }
-    };
+    }, [userDetails]);
 
-    return (
+    return { isLoaded } ? (
         <div className="NewDogPage">
             <Link to={"/dashboard"} className="back-link">
                 <span className="material-symbols-outlined">arrow_back</span>
@@ -157,6 +130,7 @@ const NewDogPage = () => {
                 <input
                     type="text"
                     name="chip"
+                    value={chipNumber}
                     placeholder="N° d’identification"
                     onChange={(e) => setChipNumber(e.target.value)}
                 />
@@ -274,7 +248,9 @@ const NewDogPage = () => {
                 Ajouter le chien
             </button>
         </div>
+    ) : (
+        <></>
     );
 };
 
-export default NewDogPage;
+export default DashboardProfile;

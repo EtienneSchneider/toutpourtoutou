@@ -1,23 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useAppContext } from "../contexts/AppContext.jsx";
 
 const DashBoardRoot = () => {
     const { appApi } = useContext(AppContext);
-
     const selectedDogId = useParams().dogId;
-
     const [dogList, setDogList] = useState(null);
     const [order, setOrder] = useState(null);
     const [products, setProducts] = useState([]);
-
+    const { userDetails } = useAppContext();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
+        if (localStorage.getItem("accessToken") && userDetails) {
             appApi
                 .getUserDogs({
-                    owner: "65f85f2a2774f9456d55f288",
+                    owner: userDetails._id,
                 })
                 .then((response) => {
                     setDogList(response.data);
@@ -36,7 +35,7 @@ const DashBoardRoot = () => {
 
             appApi
                 .getUserOrders({
-                    user: "65f85f2a2774f9456d55f288",
+                    user: userDetails._id,
                 })
                 .then((response) => {
                     const allOrders = response.data;
@@ -52,7 +51,7 @@ const DashBoardRoot = () => {
                     console.log(error);
                 });
         }
-    }, []);
+    }, [userDetails]);
 
     useEffect(() => {
         if (order && order.orderedProducts.length > 0) {

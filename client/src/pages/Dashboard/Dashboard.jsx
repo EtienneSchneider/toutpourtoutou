@@ -60,9 +60,9 @@ const DashBoard = () => {
                                 : "Femelle"}
                         </li>
                         <li>
-                            {selectedDogData.health.heathIssues.length == 0
+                            {selectedDogData.health.healthIssues.length == 0
                                 ? "Bonne santé"
-                                : selectedDogData.health.map(
+                                : selectedDogData.health.healthIssues.map(
                                       (healthProb) => healthProb,
                                   )}
                         </li>

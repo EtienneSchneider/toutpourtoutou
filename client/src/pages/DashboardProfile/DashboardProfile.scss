@@ -1,0 +1,75 @@
+.DashBoard {
+    padding: 4em;
+    display: grid;
+    grid-template-columns: 0.3fr 0.26fr 0.44fr;
+    grid-template-rows: auto auto auto;
+    gap: 1em 1em;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "dog-card recap recap"
+        "delivery delivery delivery"
+        "articles articles inter";
+
+    > div {
+        background-color: var(--white);
+        padding: 2em 4em;
+        border-radius: 16px;
+    }
+
+    .dog-card {
+        grid-area: dog-card;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1em;
+
+        .carac-list li {
+            list-style-type: disc;
+        }
+
+        .img-container {
+            height: 128px;
+            min-width: 128px;
+            border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 128px;
+                height: 128px;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .recap {
+        grid-area: recap;
+    }
+
+    .delivery {
+        grid-area: delivery;
+        display: flex;
+        gap: 4rem;
+
+        .delivery-desc {
+            flex-shrink: 0;
+            h2 {
+                margin-bottom: 1rem;
+            }
+        }
+
+        .delivery-list {
+            display: flex;
+            overflow-x: scroll;
+            gap: 1rem;
+        }
+    }
+
+    .articles {
+        grid-area: articles;
+    }
+
+    .inter {
+        grid-area: inter;
+    }
+}

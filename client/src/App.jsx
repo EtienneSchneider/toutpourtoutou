@@ -11,6 +11,7 @@ import LoginPage from "./pages/Authentification/LoginPage";
 import { AppContextProvider, useAppContext } from "./contexts/AppContext.jsx";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import DashboardProfile from "./pages/DashboardProfile/DashboardProfile.jsx";
 
 function Content() {
     const { appApi, isAuthentificated, setIsAuthentificated, setUserDetails } =
@@ -18,20 +19,23 @@ function Content() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-            appApi
-                .getAuthStatus()
-                .then((response) => {
+        const fetchData = async () => {
+            try {
+                if (localStorage.getItem("accessToken")) {
+                    const response = await appApi.getAuthStatus();
                     setUserDetails(response.data);
-                })
-                .catch((error) => {
+                } else {
                     setIsAuthentificated(false);
-                    localStorage.removeItem("accessToken");
                     navigate("/login");
-                });
-        } else {
-            navigate("/login");
-        }
+                }
+            } catch (error) {
+                setIsAuthentificated(false);
+                localStorage.removeItem("accessToken");
+                navigate("/login");
+            }
+        };
+
+        fetchData();
     }, [isAuthentificated]);
 
     return (
@@ -40,6 +44,7 @@ function Content() {
                 <Route path="/dashboard" exact element={<DashBoardRoot />}>
                     <Route path="/dashboard/:dogId" element={<DashBoard />} />
                 </Route>
+                <Route path="/dog-profile/:dogId" element={<DashboardProfile />} />
                 <Route path="/products" exact element={<Products />} />
                 <Route path="/new-dog" exact element={<NewDogPage />} />
                 <Route path="/comptest" exact element={<ComponentTest />} />
