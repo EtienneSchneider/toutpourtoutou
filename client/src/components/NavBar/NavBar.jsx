@@ -5,6 +5,7 @@ const NavBar = () => {
     const location = useLocation();
     return (
         <nav className="bg-white">
+            <img src="/toutpourtoutou.svg" alt="logo" />
             <ul className="col-gray">
                 <li>
                     <NavLink

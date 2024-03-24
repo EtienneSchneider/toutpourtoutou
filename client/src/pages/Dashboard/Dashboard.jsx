@@ -11,7 +11,6 @@ import ArticleCard from "../../components/ArticleCard/ArticleCard";
 const DashBoard = () => {
     const { dogList, selectedDogId, order, products } = useOutletContext();
     const [selectedDogData, setSelectedDogData] = useState(null);
-    console.log(selectedDogData);
 
     const [isLoaded, setLoaded] = useState(false);
 

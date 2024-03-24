@@ -5,7 +5,7 @@ import {
     useState,
     useCallback,
 } from "react";
-import { api } from "../../Service/Api";
+import { api } from "../Service/Api";
 
 export const AppContext = createContext();
 

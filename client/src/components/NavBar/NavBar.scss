@@ -5,7 +5,12 @@ nav {
     position: sticky;
     top: 0;
     z-index: 999;
-
+    align-items: center;
+    img {
+        width: 56px;
+        height: 56px;
+        margin-right: auto;
+    }
     ul {
         display: flex;
         gap: 64px;
