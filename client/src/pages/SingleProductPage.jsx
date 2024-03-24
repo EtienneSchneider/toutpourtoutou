@@ -1,6 +1,6 @@
 import "./SingleProductPage.scss";
 import ProductCounter from "../components/product_components/ProductCounter";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../contexts/AppContext.jsx";
 import { Link, useParams } from "react-router-dom";
 

@@ -5,7 +5,12 @@ import DogFormSection from "../../components/dog_components/DogFormSection.jsx";
 import ProductCounter from "../../components/product_components/ProductCounter.jsx";
 import RadioContainer from "../../components/RadioContainer/RadioContainer.jsx";
 import MultiSelect from "../../components/Multiselect/Multiselect.jsx";
-import { breeds, hIssues, treatmentsList, foods } from "../../assets/options.js";
+import {
+    breeds,
+    hIssues,
+    treatmentsList,
+    foods,
+} from "../../assets/options.js";
 import { useAppContext } from "../../contexts/AppContext.jsx";
 import { formatDate, getTodayDate } from "../../helpers/functions.js";
 import { useNavigate } from "react-router-dom";
@@ -31,8 +36,15 @@ const NewDogPage = () => {
     const [error, setError] = useState("");
     const { appApi, userDetails } = useAppContext();
     const navigate = useNavigate();
-    
+
     const handleCreateDog = async () => {
+        appApi
+            .createOrder({ user: userDetails._id })
+            .then((response) => {})
+            .catch((error) => {
+                console.log(error);
+            });
+
         if (
             chipNumber === "" ||
             name === "" ||
@@ -55,7 +67,7 @@ const NewDogPage = () => {
                     gender,
                     birthDate: formatDate(birthdate),
                     breed,
-                    picture: photoUrl
+                    picture: photoUrl,
                 },
                 health: {
                     sterilized,
