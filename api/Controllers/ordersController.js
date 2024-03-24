@@ -43,3 +43,41 @@ export const getUserOrders = async (req, res) => {
         });
     }
 };
+
+export const modifyOrder = async (req, res) => {
+    try {
+        const { orderNumber, productSN, newQuantity } = req.body;
+
+        const order = await Order.findOne({ orderNumber: orderNumber});
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found.' });
+        }
+
+        const prodToChange = order.orderedProducts.find(p => p.serialNumber === productSN);
+
+        if(prodToChange){
+            if(newQuantity == 0){
+                let indexToRem = order.orderedProducts.indexOf(prodToChange);
+                order.orderedProducts.splice(indexToRem, 1); 
+            }
+            else{
+                console.log(newQuantity)
+                let indexToMod = order.orderedProducts.indexOf(prodToChange);
+                order.orderedProducts[indexToMod] = {serialNumber: productSN, quantity: newQuantity};
+            }
+        }
+        else{
+            order.orderedProducts.push({serialNumber: productSN, quantity: newQuantity});
+        }
+
+        order.markModified('orderedProducts');
+        await order.save();
+
+        res.status(200).json({ message: 'Chien mis à jour avec succès',order: order});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            error: "Error modifying order.",
+        });
+    }
+};
