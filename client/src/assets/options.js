@@ -1,5 +1,6 @@
 export const breeds = [
     "Choisir",
+    "Beauceron",
     "Beagle",
     "Berger Allemand",
     "Berger Australien",

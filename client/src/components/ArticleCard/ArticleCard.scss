@@ -1,0 +1,25 @@
+.article {
+    padding: 16px;
+    display: flex;
+    gap: 8px;
+    background-color: var(--primary-default);
+    border-radius: 16px;
+    align-items: center;
+
+    .tag {
+        font-size: 0.7rem;
+        color: var(--gray);
+    }
+    a {
+        margin-left: auto;
+        margin-right: 16px;
+        padding: 8px 16px;
+        background-color: var(--accent);
+        color: var(--white);
+        border-radius: 16px;
+
+        &:hover {
+            background-color: hsl(4, 85%, 60%);
+        }
+    }
+}

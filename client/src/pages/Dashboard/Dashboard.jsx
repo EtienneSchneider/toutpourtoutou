@@ -6,6 +6,7 @@ import Button from "../../components/clickables/Button";
 import LastOrderList from "../../components/dashboard_components/LastOrder";
 import DogDropdown from "../../components/dashboard_components/DogDropdown";
 import WeightChart from "../../components/WeightChart/WeightChart";
+import ArticleCard from "../../components/ArticleCard/ArticleCard";
 
 const DashBoard = () => {
     const { dogList, selectedDogId, order, products } = useOutletContext();
@@ -13,6 +14,24 @@ const DashBoard = () => {
     console.log(selectedDogData);
 
     const [isLoaded, setLoaded] = useState(false);
+
+    const articles = [
+        {
+            tag: "Chiots",
+            content: "Chien mâle ou femelle : que choisir ?",
+            link: "https://www.zooplus.fr/magazine/chien/adopter-un-chien/chien-male-femelle",
+        },
+        {
+            tag: "Chiots",
+            content: "30 noms de chien en O ?",
+            link: "https://www.zooplus.fr/magazine/chien/adopter-un-chien/noms-de-chien-en-o-pour-lannee-2018",
+        },
+        {
+            tag: "Nourriture",
+            content: "Os à mâcher pour chien : quels est le danger ?",
+            link: "https://www.zooplus.fr/magazine/chien/alimentation-du-chien/os-macher-chien-danger",
+        },
+    ];
 
     useEffect(() => {
         if (dogList) {
@@ -89,7 +108,7 @@ const DashBoard = () => {
                     stringToAge(selectedDogData.identification.birthDate) >
                         12 ? (
                         <>
-                            <div className="food info">
+                            <div className="food">
                                 {" "}
                                 <span class="material-symbols-outlined">
                                     info
@@ -98,13 +117,25 @@ const DashBoard = () => {
                                 nourriture par kilogramme de poids corporel
                                 divisé en 1 ou 2 repas par jours.
                             </div>
-                            <div className="vaccine info">
+                            <div className="vaccine">
                                 {" "}
                                 <span class="material-symbols-outlined">
                                     warning
                                 </span>
                                 Aucun vaccin a prévoir.
                             </div>
+
+                            {selectedDogData &&
+                                selectedDogData.activity.outings < 3 && (
+                                    <div className="outing">
+                                        {" "}
+                                        <span class="material-symbols-outlined">
+                                            warning
+                                        </span>
+                                        Vous devriez sortir plus souvent votre
+                                        chien, au minimum 3 fois par jours.
+                                    </div>
+                                )}
                         </>
                     ) : (
                         <>
@@ -125,6 +156,18 @@ const DashBoard = () => {
                                 Le prochain vaccin contre la maladie de Carré
                                 devrait idéalement avoir lieu dans 3 semaines.
                             </div>
+
+                            {selectedDogData &&
+                                selectedDogData.activity.outings < 3 && (
+                                    <div className="outing">
+                                        {" "}
+                                        <span class="material-symbols-outlined">
+                                            warning
+                                        </span>
+                                        Vous devriez sortir plus souvent votre
+                                        chien, au minimum 3 fois par jours.
+                                    </div>
+                                )}
                         </>
                     )}
                 </div>
@@ -151,6 +194,13 @@ const DashBoard = () => {
                 <h2 className="subheadertext">
                     Articles susceptibles de vous intéresser
                 </h2>
+                <div className="articlesContent">
+                    {articles.map((article) =>
+                        (
+                            <ArticleCard article={article} />
+                        ),
+                    )}
+                </div>
             </div>
             <div className="inter">
                 <h2 className="subheadertext">Fil d'actualité</h2>
