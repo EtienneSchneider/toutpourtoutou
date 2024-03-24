@@ -1,6 +1,7 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DashBoardRoot from "./pages/DashboardRoot";
+import NotFound from "./pages/NotFound";
 import DashBoard from "./pages/Dashboard/Dashboard";
 import NewDogPage from "./pages/NewDog/NewDogPage.jsx";
 import Products from "./pages/Products.jsx";
@@ -62,7 +63,7 @@ function Content() {
                 <Route path="/new-dog" exact element={<NewDogPage />} />
                 <Route path="/comptest" exact element={<ComponentTest />} />
                 <Route path="/login" exact element={<LoginPage />} />
-                <Route path="*" element={<p>not found</p>} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </div>
     );

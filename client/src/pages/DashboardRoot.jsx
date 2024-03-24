@@ -32,23 +32,26 @@ const DashBoardRoot = () => {
                     console.log(error);
                 });
 
-            appApi
-                .getUserOrders({
-                    user: userDetails._id,
-                })
-                .then((response) => {
-                    const allOrders = response.data;
-                    if (allOrders.length > 0) {
-                        const latestOrder = allOrders.sort(
-                            (a, b) =>
-                                new Date(b.orderDate) - new Date(a.orderDate),
-                        )[0];
-                        setOrder(latestOrder);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            if (!order) {
+                appApi
+                    .getUserOrders({
+                        user: userDetails._id,
+                    })
+                    .then((response) => {
+                        const allOrders = response.data;
+                        if (allOrders.length > 0) {
+                            const latestOrder = allOrders.sort(
+                                (a, b) =>
+                                    new Date(b.orderDate) -
+                                    new Date(a.orderDate),
+                            )[0];
+                            setOrder(latestOrder);
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
         }
     }, [userDetails]);
 
@@ -76,7 +79,7 @@ const DashBoardRoot = () => {
         }
     }, [order]);
 
-    return { dogList } ? (
+    return dogList ? (
         <Outlet
             context={{
                 dogList: dogList,

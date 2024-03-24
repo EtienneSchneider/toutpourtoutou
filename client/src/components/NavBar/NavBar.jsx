@@ -63,13 +63,16 @@ const NavBar = () => {
                         Forum
                     </NavLink>
                 </li>
+                <li>
+                    {isAuthentificated && (
+                        <button className="logout" onClick={handleLogout}>
+                            Déconnexion
+                            <span className="material-symbols-outlined">logout</span>
+                        </button>
+                    )}
+                </li>
             </ul>
-            {isAuthentificated && (
-                <button className="logout" onClick={handleLogout}>
-                    Déconnexion
-                    <span class="material-symbols-outlined">logout</span>
-                </button>
-            )}
+            
         </nav>
     );
 };

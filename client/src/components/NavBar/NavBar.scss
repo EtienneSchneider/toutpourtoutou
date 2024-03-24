@@ -13,13 +13,14 @@ nav {
     }
 
     .logout {
-        margin-left: 64px;
+        padding-block: 32px;
         display: flex;
         align-items: center;
         gap: 8px;
         border-bottom: 3px solid transparent;
         color: var(--gray);
     }
+
     ul {
         display: flex;
         gap: 64px;

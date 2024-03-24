@@ -122,6 +122,17 @@ label.radio-lab {
     }
 }
 
+.NotFound{
+    display: flex;
+    justify-content: center;
+    padding: 128px;
+
+    section{
+        border-radius: 16px;
+        padding: 64px;
+    }
+}
+
 @media screen and (max-width: 800px) {
     html {
         font-size: 16px;

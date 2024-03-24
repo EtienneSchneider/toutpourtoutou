@@ -109,7 +109,7 @@ const DashBoard = () => {
                         <>
                             <div className="food">
                                 {" "}
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                     info
                                 </span>
                                 Votre chien à besoin d'envrion 30 grammes de
@@ -118,7 +118,7 @@ const DashBoard = () => {
                             </div>
                             <div className="vaccine">
                                 {" "}
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                     warning
                                 </span>
                                 Aucun vaccin a prévoir.
@@ -128,7 +128,7 @@ const DashBoard = () => {
                                 selectedDogData.activity.outings < 3 && (
                                     <div className="outing">
                                         {" "}
-                                        <span class="material-symbols-outlined">
+                                        <span className="material-symbols-outlined">
                                             warning
                                         </span>
                                         Vous devriez sortir plus souvent votre
@@ -140,7 +140,7 @@ const DashBoard = () => {
                         <>
                             <div className="food">
                                 {" "}
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                     info
                                 </span>
                                 Votre chien à besoin d'envrion 65 grammes de
@@ -149,7 +149,7 @@ const DashBoard = () => {
                             </div>
                             <div className="vaccine">
                                 {" "}
-                                <span class="material-symbols-outlined">
+                                <span className="material-symbols-outlined">
                                     warning
                                 </span>
                                 Le prochain vaccin contre la maladie de Carré
@@ -160,7 +160,7 @@ const DashBoard = () => {
                                 selectedDogData.activity.outings < 3 && (
                                     <div className="outing">
                                         {" "}
-                                        <span class="material-symbols-outlined">
+                                        <span className="material-symbols-outlined">
                                             warning
                                         </span>
                                         Vous devriez sortir plus souvent votre
@@ -183,11 +183,14 @@ const DashBoard = () => {
                         <p className="col-gray">Aucune commande prévue</p>
                     )}
                 </div>
-                <LastOrderList
+                {
+                    order && products ? <LastOrderList
                     products={products}
                     orderList={order}
                     withPrices={false}
-                />
+                    /> : <></>
+                }
+                
             </div>
             <div className="articles">
                 <h2 className="subheadertext">
