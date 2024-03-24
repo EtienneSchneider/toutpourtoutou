@@ -17,6 +17,8 @@ nav {
         display: flex;
         align-items: center;
         gap: 8px;
+        border-bottom: 3px solid transparent;
+        color: var(--gray);
     }
     ul {
         display: flex;

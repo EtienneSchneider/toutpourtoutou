@@ -121,9 +121,13 @@ const Products = () => {
                         >
                             <option value="">Non spécifié</option>
 
-                            {filterPropositioins.current.dogType.map((prop) => (
-                                <option value={prop}>{prop}</option>
-                            ))}
+                            {filterPropositioins.current.dogType.map((prop) =>
+                                prop === "" ? (
+                                    <></>
+                                ) : (
+                                    <option value={prop}>{prop}</option>
+                                ),
+                            )}
                         </select>
                         <label htmlFor="type">Type</label>
                         <select
